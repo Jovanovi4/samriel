@@ -1,0 +1,12 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Редактировать объект{% endblock %}
+
+{% block content %}
+<h1>Редактировать объект</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

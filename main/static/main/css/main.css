@@ -1,0 +1,61 @@
+.custom-sidebar {
+    background-color: #212529; /* Темный фон для боковой панели */
+    width: 320px; /* Фиксированная ширина боковой панели */
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Устанавливает уровень отображения */
+    overflow-y: auto; /* Позволяет прокрутку содержимого боковой панели */
+    box-shadow: 2px 0 6px #868686; /* Тень для боковой панели */
+  }
+
+  .custom-sidebar .nav-link {
+    color: #f0f0f0; /* Белый цвет текста для ссылок в боковой панели */
+  }
+
+  .custom-sidebar a:hover {
+    color: #d1d0d0; /* Цвет текста при наведении */
+  }
+
+  .main-content {
+    margin-left: 320px; /* Создает отступ для основного контента */
+    padding: 20px; /* Добавляет внутренний отступ */
+  }
+
+  .dropdown-menu {
+    background-color: #393f46; /* Темный фон для выпадающего меню */
+  }
+
+  .dropdown-item {
+    color: white; /* Белый цвет текста для элементов выпадающего меню */
+  }
+
+  .dropdown-item:hover {
+    color: #ffffff; /* Цвет текста при наведении на элемент */
+    background-color: #000000; /* Фон при наведении на элемент */
+  }
+
+  .dropdown-toggle {
+    color: white; /* Белый цвет текста для кнопки, открывающей меню */
+  }
+
+  .divider-custom {
+    border-top: 1px solid #ffffff; /* Белый разделитель */
+    margin: 1rem 0; /* Отступы для разделителя */
+  }
+
+  .custom-icon {
+    font-size: 28px;
+    margin-top: 20px;
+    color: #ffffff; /* Исходный цвет иконки */
+    transition: color 0.3s; /* Плавный переход цвета */
+  }
+
+  .custom-icon:hover {
+    color: #1f8bff; /* Синий цвет при наведении */
+  }
+
+    body {
+    background-color: #f3f3f3;
+}

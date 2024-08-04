@@ -1,0 +1,28 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+Добавить объект недвижимости
+{% endblock %}
+
+{% block content %}
+<h1>Добавить объект недвижимости</h1>
+
+<!-- Форма выбора типа недвижимости -->
+<form method="get">
+    {% csrf_token %}
+    <label for="type">Тип недвижимости:</label>
+    <select id="type" name="type" onchange="this.form.submit()">
+        <option value="">Выберите тип</option>
+        <option value="1" {% if request.GET.type == "1" %}selected{% endif %}>Новая недвижимость</option>
+        <option value="2" {% if request.GET.type == "2" %}selected{% endif %}>Старая недвижимость</option>
+    </select>
+</form>
+
+<!-- Форма для добавления записи -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="type" value="{{ request.GET.type }}">
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}
