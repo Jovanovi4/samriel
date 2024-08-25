@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .custom-sidebar {
     background-color: #212529; /* Темный фон для боковой панели */
     width: 320px; /* Фиксированная ширина боковой панели */
@@ -10,52 +20,179 @@
     box-shadow: 2px 0 6px #868686; /* Тень для боковой панели */
   }
 
-  .custom-sidebar .nav-link {
-    color: #f0f0f0; /* Белый цвет текста для ссылок в боковой панели */
-  }
+.custom-sidebar .nav-link {
+  color: #f0f0f0; /* Белый цвет текста для ссылок в боковой панели */
+}
 
-  .custom-sidebar a:hover {
-    color: #d1d0d0; /* Цвет текста при наведении */
-  }
+.custom-sidebar a:hover {
+  color: #d1d0d0; /* Цвет текста при наведении */
+}
 
-  .main-content {
-    margin-left: 320px; /* Создает отступ для основного контента */
-    padding: 20px; /* Добавляет внутренний отступ */
-  }
+.main-content {
+  margin-top: 20px;
+  margin-left: 70px; /* Создает отступ для основного контента */
+  max-width: calc(100% - 50px); /* Ограничивает ширину основного контента */
+  margin-bottom: 20px;
+}
+.button-right {
+  margin-left: 80%;
+}
 
-  .dropdown-menu {
-    background-color: #393f46; /* Темный фон для выпадающего меню */
-  }
+.header-container {
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  justify-content: space-between; /* Разделение заголовка и кнопки по краям */
+  margin-bottom: 20px; /* Отступ снизу, если нужно */
+}
+.header-container h1 {
+  margin: 0; /* Убираем стандартные отступы у заголовка */
+}
 
-  .dropdown-item {
-    color: white; /* Белый цвет текста для элементов выпадающего меню */
-  }
+.header-container .btn {
+  margin-bottom: 20px; /* Убираем стандартные отступы у кнопки */
+}
 
-  .dropdown-item:hover {
-    color: #ffffff; /* Цвет текста при наведении на элемент */
-    background-color: #000000; /* Фон при наведении на элемент */
-  }
+.dropdown-menu {
+  background-color: #393f46; /* Темный фон для выпадающего меню */
+}
 
-  .dropdown-toggle {
-    color: white; /* Белый цвет текста для кнопки, открывающей меню */
-  }
+.dropdown-item {
+  color: white; /* Белый цвет текста для элементов выпадающего меню */
+}
 
-  .divider-custom {
-    border-top: 1px solid #ffffff; /* Белый разделитель */
-    margin: 1rem 0; /* Отступы для разделителя */
-  }
+.dropdown-item:hover {
+  color: #ffffff; /* Цвет текста при наведении на элемент */
+  background-color: #000000; /* Фон при наведении на элемент */
+}
 
-  .custom-icon {
-    font-size: 28px;
-    margin-top: 20px;
-    color: #ffffff; /* Исходный цвет иконки */
-    transition: color 0.3s; /* Плавный переход цвета */
-  }
+.dropdown-toggle {
+  color: white; /* Белый цвет текста для кнопки, открывающей меню */
+}
 
-  .custom-icon:hover {
-    color: #1f8bff; /* Синий цвет при наведении */
-  }
+.divider-custom {
+  border-top: 1px solid #ffffff; /* Белый разделитель */
+  margin: 1rem 0; /* Отступы для разделителя */
+}
 
-    body {
-    background-color: #f3f3f3;
+.custom-icon {
+  font-size: 28px;
+  margin-top: 20px;
+  color: #ffffff; /* Исходный цвет иконки */
+  transition: color 0.3s; /* Плавный переход цвета */
+}
+
+.custom-icon:hover {
+  color: #1f8bff; /* Синий цвет при наведении */
+}
+
+/* Стили для отступов и ширины колонок */
+.table .image-column {
+  width: 12%; /* Ширина колонки с изображением */
+}
+
+.table .title-column {
+  width: 63%; /* Ширина колонки с названием */
+}
+
+.table .actions-column {
+  width: 25%; /* Ширина колонки с действиями */
+}
+
+.table-fixed-height tbody tr {
+  height: 70px; /* Установите фиксированную высоту для строк */
+}
+
+.table-fixed-height td, .table-fixed-height th {
+  vertical-align: middle; /* Вертикальное выравнивание содержимого ячеек */
+}
+
+.table .btn i.bi-trash {
+  font-size: 0,5rem; /* Уменьшает размер иконки до 1rem */
+} 
+
+.form-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 80%; /* Установите желаемую максимальную ширину */
+  margin: 0 auto; /* Центрируйте контейнер на странице */
+  padding: 40px; /* Добавьте отступы внутри контейнера */
+  border: 1px solid #ddd; /* Добавьте рамку вокруг контейнера */
+  border-radius: 8px; /* Добавьте скругленные углы */
+  background-color: #f9f9f9; /* Добавьте фон */
+  margin-top: 50px; /* Добавьте отступ между контейнерами */
+  margin-bottom: 20px; /* Добавьте отступ между контейнерами */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.container {
+  margin-bottom: 20px; /* Отступ между секциями */
+}
+
+.container h3 {
+  margin-bottom: 10px;
+}
+
+.form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Регулируйте расстояние между полями */
+}
+
+.inline-field {
+  flex: 1;
+  min-width: 200px; /* Минимальная ширина каждого поля, настройте по необходимости */
+}
+
+.form-section {
+  margin-bottom: 40px; /* Отступ снизу для каждой секции */
+}
+
+.form-section h3 {
+  margin-top: 30px;
+  margin-bottom: 10px; /* Отступ снизу для заголовков */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Отступ снизу для каждой группы полей */
+}
+
+.type-selection-form label {
+  font-weight: bold; /* Жирный текст для метки */
+  margin-right: 10px; /* Отступ справа от метки */
+}
+
+.type-selection-form select {
+
+  padding: 8px 12px; /* Внутренний отступ */
+  border-radius: 4px; /* Округленные углы */
+  border: 1px solid #ced4da; /* Светлый цвет границы */
+  font-size: 1rem; /* Размер шрифта */
+}
+
+.type-selection-form select:focus {
+  border-color: #80bdff; /* Цвет границы при фокусе */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тень при фокусе */
+  outline: none; /* Убирает стандартный outline */
+}
+
+.sort-title {
+  display: flex;
+  align-items: center; /* Центрирует элементы по вертикали */
+  gap: 10px; /* Пробел между текстом и стрелочками */
+}
+
+.sort-container {
+  display: flex;
+  flex-direction: column; /* Располагает стрелочки вертикально */
+}
+
+.sort-link {
+  color: inherit; /* Наследует цвет текста из родительского элемента */
+  text-decoration: none; /* Убирает подчеркивание ссылок */
+}
+
+.sort-link:hover {
+  color: #007bff; /* Цвет при наведении */
 }

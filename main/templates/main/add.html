@@ -5,24 +5,148 @@
 {% endblock %}
 
 {% block content %}
-<h1>Добавить объект недвижимости</h1>
 
-<!-- Форма выбора типа недвижимости -->
-<form method="get">
-    {% csrf_token %}
-    <label for="type">Тип недвижимости:</label>
-    <select id="type" name="type" onchange="this.form.submit()">
-        <option value="">Выберите тип</option>
-        <option value="1" {% if request.GET.type == "1" %}selected{% endif %}>Новая недвижимость</option>
-        <option value="2" {% if request.GET.type == "2" %}selected{% endif %}>Старая недвижимость</option>
-    </select>
-</form>
+<div class="main-content">
+    <h1>Каталог</h1>
+    <p>Добавить объект недвижимости</p>
 
-<!-- Форма для добавления записи -->
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="hidden" name="type" value="{{ request.GET.type }}">
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+    <!-- Навигация по вкладкам -->
+    <ul class="nav nav-tabs" id="propertyTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">Общие данные</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Изображение</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="seo-tab" data-bs-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">SEO</a>
+        </li>
+    </ul>
+    
+    <!-- Форма для добавления записи -->
+    <div class="form-container mt-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="{{ request.GET.type }}">
+
+            <div class="tab-content" id="propertyTabContent">
+                <!-- Вкладка "Общие данные" -->
+                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                    <div class="form-section">
+                        <h3>Основные данные</h3>
+                        <div class="form-group">
+                            {{ form.title.label_tag }} {{ form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.top_description.label_tag }} {{ form.top_description }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.down_description.label_tag }} {{ form.down_description }}
+                        </div>
+
+                        <!-- Группа полей в одну строку -->
+                        <div class="form-group form-inline">
+                            <div class="inline-field">
+                                {{ form.square.label_tag }} {{ form.square }}
+                            </div>
+                            <div class="inline-field">
+                                {{ form.price.label_tag }} {{ form.price }}
+                            </div>
+                            <div class="inline-field">
+                                {{ form.floor.label_tag }} {{ form.floor }}
+                            </div>
+                            <div class="inline-field">
+                                {{ form.all_floor.label_tag }} {{ form.all_floor }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form.deadline.label_tag }} {{ form.deadline }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.jarlyk.label_tag }} {{ form.jarlyk }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.about_before_slide.label_tag }} {{ form.about_before_slide }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.about_after_slide.label_tag }} {{ form.about_after_slide }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.category.label_tag }} {{ form.category }}
+                        </div>
+                    </div>
+
+                    {% if request.GET.type == "1" %}
+                    <div class="form-section">
+                        <h3>Видео</h3>
+                        <div class="form-group">
+                            {{ form.video_name.label_tag }} {{ form.video_name }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.video.label_tag }} {{ form.video }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Секция 3 -->
+                    <div class="form-section">
+                        <h3>Местоположение</h3>
+                        <div class="form-group">
+                            {{ form.location.label_tag }} {{ form.location }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.adres.label_tag }} {{ form.adres }}
+                        </div>
+                    </div>
+
+                    <!-- Секция 4 -->
+                    <div class="form-section">
+                        <h3>Характеристики</h3>
+                        <div class="form-group">
+                            {{ form.characteristic.label_tag }} {{ form.characteristic }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description.label_tag }} {{ form.description }}
+                        </div>
+                    </div>
+
+                    <!-- Секция 5 -->
+                    <div class="form-section">
+                        <h3>Преимущества</h3>
+                        <div class="form-group">
+                            {{ form.advantages.label_tag }} {{ form.advantages }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.deteil_description.label_tag }} {{ form.deteil_description }}
+                        </div>    
+                    </div>
+                </div>
+
+                <!-- Вкладка "Изображение" -->
+                <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                    <div class="form-section">
+                        <h3>Главное изображение</h3>
+                        <div class="form-group">
+                            {{ form.image.label_tag }} {{ form.image }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Вкладка "SEO" -->
+                <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+                    <div class="form-section">
+                        <h3>Название страницы</h3>
+                        <div class="form-group mt-3">
+                            {{ seo_form.as_p }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
