@@ -33,7 +33,7 @@ class FirstScreen(models.Model):
 
     choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to='images/')
-    name = models.CharField('Имя сайта', max_length=255)
+    name = models.CharField('Имя сайта', max_length=255, blank=True)
     title = models.CharField('Заголовок сайта', max_length=255, blank=True) 
     category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOICES, default='house', blank=True)
     prefix = models.CharField('Префикс цены', max_length=100, choices=PREFIX_CHOICES, default='2', blank=True)
@@ -46,6 +46,9 @@ class FirstScreen(models.Model):
     variants3 = models.TextField('Варианты №3', blank=True, null=True)
     question4 = models.CharField('Вопрос №4', max_length=255, blank=True)
     variants4 = models.TextField('Варианты №4', blank=True, null=True)
+
+    def __str__(self):
+        return self.prefix
 
 
 class Contact(models.Model):

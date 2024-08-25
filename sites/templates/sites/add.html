@@ -1,0 +1,32 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+{% if building %}
+    Редактировать САЙТ
+{% else %}
+    Добавить САЙТ
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container mt-3">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-section mt-4">
+            <h3>Выбор</h3>
+            <div class="form-group">
+                {{ form.title.label_tag }} {{ form.title }}
+            </div>
+            <div class="form-group">
+                {{ form.type.label_tag }} {{ form.type }}
+            </div>
+            <div class="form-group">
+                {{ form.category.label_tag }} {{ form.category }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+    </div>
+</form>
+</div>
+{% endblock %}
