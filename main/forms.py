@@ -1,11 +1,24 @@
 from django import forms
-from .models import Building, Seo
+from .models import Building, Seo, TypeChoise
 
 
 class TypeForm(forms.ModelForm):
     class Meta:
-        model = Building
-        fields = [ 'type' ]
+        model = TypeChoise
+        fields = [ 'type_choise', 'category' ]
+
+        widgets = {
+            'type_choise': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+        }
+
+
 
 
 
@@ -13,46 +26,64 @@ class BuildingForm(forms.ModelForm):
     class Meta:
         model = Building
         fields = [
-            'title', 'top_description', 'down_description', 'deadline', 'jarlyk', 
-            'about_before_slide', 'about_after_slide', 'category', 'video_name', 'video', 
-            'location', 'adres', 'characteristic', 'description', 'advantages', 'deteil_description',
-            'image', 'type'
+            'title',
+            'top_description',
+            'down_description',
+            'deadline',
+            'image',
+            'image_slider',
+            'jarlyk',
+            'about_before_slide',
+            'about_after_slide',
+            'category',
+            'video_name',
+            'video',
+            'location',
+            'adres',
+            'characteristic',
+            'description2',
+            'advantages',
+            'deteil_description',
         ]
+
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите название'
             }),
-            'top_description': forms.Textarea(attrs={
+            'top_description': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
+                'placeholder': ''
             }),
-            'down_description': forms.Textarea(attrs={
+            'down_description': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
+                'placeholder': ''
             }),
             'deadline': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите срок сдачи'
+                'placeholder': ''
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+            'image_slider': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
             }),
             'jarlyk': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Укажите старт продаж'
+                'placeholder': ''
             }),
             'about_before_slide': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
+                'placeholder': ''
             }),
             'about_after_slide': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
+                'placeholder': ''
             }),
             'category': forms.Select(attrs={
                 'class': 'form-control',
+                'placeholder': ''
             }),
             'video_name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -74,7 +105,7 @@ class BuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
-            'description': forms.Textarea(attrs={
+            'description2': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': ''
             }),
@@ -86,9 +117,7 @@ class BuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
-            })
+
         }
 
 
@@ -96,57 +125,62 @@ class OldBuildingForm(forms.ModelForm):
     class Meta:
         model = Building
         fields = [
-            'title', 'top_description', 'down_description', 'about_before_slide', 
-            'about_after_slide', 'square', 'floor', 'all_floor', 'price', 'image', 'category',
-            'location', 'adres', 'characteristic', 'description', 
-            'advantages', 'deteil_description', 'type'
+            'title',
+            'category',
+            'square',
+            'floor',
+            'all_floor',
+            'description1',
+            'price',
+            'image',
+            'image_slider',
+            'video',
+            'location',
+            'adres',
+            'characteristic',
+            'description2',
+            'advantages',
+            'deteil_description',
         ]
+
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите название'
             }),
-            'top_description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
-            }),
-            'down_description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
-            }),
-            'about_before_slide': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
-            }),
-            'about_after_slide': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': '',
-                'rows': 3
-            }),
             'square': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Укажите площадь'
+                'placeholder': ''
             }),
             'floor': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Укажите этаж'
+                'placeholder': ''
             }),
             'all_floor': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Укажите кол-во этажей'
+                'placeholder': ''
             }),
             'price': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Укажите цену'
+                'placeholder': ''
+            }),
+            'deadline': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': ''
             }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control'
             }),
+            'image_slider': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
             'category': forms.Select(attrs={
                 'class': 'form-control',
+                'placeholder': ''
+            }),
+            'video': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': ''
             }),
             'location': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -160,7 +194,7 @@ class OldBuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
-            'description': forms.Textarea(attrs={
+            'description2': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': ''
             }),
@@ -172,7 +206,15 @@ class OldBuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
+            'description1': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+
+
         }
+
+       
 
 
         

@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('edit/', views.edit, name='edit'),  # Маршрут для добавления нового объекта
-    path('edit/<int:pk>/', views.edit, name='edit_with_pk'),  # Маршрут для редактирования существующего объекта
-    path('delete/<int:pk>/', views.delete, name='delete'),
+    path('objects/add/', views.add, name='add'),
+    path('objects/edit/<int:pk>/', views.edit, name='edit'),  # Маршрут для добавления нового объекта
+    path('objects/delete/<int:pk>/', views.delete, name='delete'),
 ]

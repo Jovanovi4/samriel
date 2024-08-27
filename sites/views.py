@@ -27,11 +27,11 @@ def add(request, pk=None):
             choise.user = request.user
             choise.save()
 
-            # Создаем связанный FirstScreen объект, если его еще нет
-            first_screen, created = FirstScreen.objects.get_or_create(choise=choise)
+            if not hasattr(choise, 'firstscreen'):
+                first_screen = FirstScreen.objects.create(choise=choise)
 
             # Редирект на страницу редактирования, используя pk нового объекта FirstScreen
-            return redirect('edit', pk=first_screen.pk)
+            return redirect('edit_s', pk=first_screen.pk)
 
     return render(request, 'sites/add.html', {'form': form, 'choise': choise})
 
@@ -53,10 +53,14 @@ def edit(request, pk=None):
 
     return render(request, 'sites/edit.html', {'form': form, 'building': building})
 
+
+
+
 def landing(request, page_id):
     landing_page = get_object_or_404(FirstScreen, pk=page_id)
         # Форматирование цены с точками как разделителями тысяч
-    landing_page.price = '{:,}'.format(landing_page.price).replace(',', '.')
+    if landing_page.price is not None:
+        landing_page.price = '{:,}'.format(landing_page.price).replace(',', '.')
 
     variants_list1 = landing_page.variants1.split('\n') if landing_page.variants1 else []
     variants_list2 = landing_page.variants2.split('\n') if landing_page.variants2 else []

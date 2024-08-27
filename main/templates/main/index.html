@@ -10,7 +10,7 @@
     <h1 class="m-0">Каталог</h1>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="m-0">Все объекты недвижимости</p>
-        <a href="{% url 'edit' %}" class="w-30 btn btn-primary">
+        <a href="{% url 'add' %}" class="w-30 btn btn-primary">
             <i class="fas fa-plus-circle"></i> Добавить недвижимость
         </a>
     </div>
@@ -22,15 +22,15 @@
                 <thead class="table-dark">
                     <tr>
                         <th class="image-column">Изображение</th>
-                       <th class="title-column">
-                        <div class="sort-title">
-                            Название
-                            <div class="sort-container">
-                                <a href="?sort=-id{% if page_obj.has_other_pages %}&page={{ page_obj.number }}{% endif %}" class="sort-link">
-                                    <i class="bi bi-caret-down-fill"></i> <!-- Стрелочка вниз -->
-                                </a>
+                        <th class="title-column">
+                            <div class="sort-title">
+                                Название
+                                <div class="sort-container">
+                                    <a href="?sort=-id{% if page_obj.has_other_pages %}&page={{ page_obj.number }}{% endif %}" class="sort-link">
+                                        <i class="bi bi-caret-down-fill"></i> <!-- Стрелочка вниз -->
+                                    </a>
+                                </div>
                             </div>
-                        </div>
                         </th>
                         <th class="actions-column">Действия</th>
                     </tr>
@@ -45,10 +45,10 @@
                             Нет изображения
                             {% endif %}
                         </td>
-                        <td class="title-column"><a href="{% url 'edit_with_pk' pk=item.pk %}">{{ item.title }}</a></td>
+                        <td class="title-column"><a href="{% url 'edit' pk=item.pk %}">{{ item.title }}</a></td>
                         <td class="actions-column text-end">
                             <!-- Кнопка для редактирования записи -->
-                            <a href="{% url 'edit_with_pk' pk=item.pk %}" class="btn btn-success btn-sm" title="Редактировать">
+                            <a href="{% url 'edit' pk=item.pk %}" class="btn btn-success btn-sm" title="Редактировать">
                                 <i class="bi bi-pencil"></i> <!-- Иконка карандаша для редактирования -->
                             </a>
                             <!-- Форма для удаления записи -->
@@ -63,10 +63,10 @@
                     {% endfor %}
                 </tbody>
             </table>
-                  <!-- Информация о количестве записей -->
-                  <div class="record-info mb-3">
-                    <p>Показано {{ page_obj.paginator.count }} записей из {{ page_obj.paginator.count }}</p>
-                </div>
+            <!-- Информация о количестве записей -->
+            <div class="record-info mb-3">
+                <p>Показано {{ page_obj.paginator.count }} записей из {{ page_obj.paginator.count }}</p>
+            </div>
             <!-- Пагинация, вынесенная за контейнер -->
             <nav aria-label="Page navigation" class="pagination-wrapper mt-3">
                 <ul class="pagination justify-content-center">
@@ -98,12 +98,9 @@
                 </ul>
             </nav>
         </div>
-
-    
     </div>
     {% else %}
     <p>Объекты недвижимости отсутствуют</p>
     {% endif %}
-    
 </div>
 {% endblock %}

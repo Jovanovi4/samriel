@@ -9,7 +9,7 @@
     <h1 class="m-0">Сайты</h1>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="m-0">Список ваших проектов</p>
-        <a href="{% url 'add' %}" class="w-30 btn btn-primary">
+        <a href="{% url 'add_s' %}" class="w-30 btn btn-primary">
             <i class="fas fa-plus-circle"></i> Добавить сайт
         </a>
     </div>
@@ -31,7 +31,7 @@
             <td>{{ site.get_category_display }}</td>
             <td>{{ site.price }}</td>
             <td>
-                <a href="{% url 'edit' pk=site.pk %}">Редактировать</a> |
+                <a href="{% url 'edit_s' pk=site.pk %}">Редактировать</a> |
                 <a href="{% url 'landing' page_id=site.pk %}">Просмотреть</a>
             </td>
         </tr>
