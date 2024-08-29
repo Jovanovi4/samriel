@@ -123,6 +123,18 @@ body {
   margin-bottom: 45px; /* Добавьте отступ между контейнерами */
 }
 
+.form-container-image {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /* Установите желаемую максимальную ширину */
+  margin: 0 auto; /* Центрируйте контейнер на странице */
+  padding: 40px; /* Добавьте отступы внутри контейнера */
+  border: 1px solid #ddd; /* Добавьте рамку вокруг контейнера */
+  border-radius: 8px; /* Добавьте скругленные углы */
+  background-color: #f9f9f9; /* Добавьте фон */
+  margin-left: 0px;
+  margin-top: 20px; /* Добавьте отступ между контейнерами */
+  margin-bottom: 45px; /* Добавьте отступ между контейнерами */
+}
 
 .form-group {
   margin-bottom: 15px;
@@ -222,12 +234,138 @@ body {
 
 .remove-image {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: red;
-  color: white;
-  font-weight: bold;
-  padding: 2px 5px;
+
+  right: 4px;
+  background-color:none;
+  color: red;
   cursor: pointer;
-  border-radius: 50%;
+  opacity: 0; /* Скрыть крестик по умолчанию */
+  transition: opacity 0.3s ease; /* Плавное появление и исчезновение крестика */
+
+}
+
+/* Контейнер для галереи изображений */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap; /* Позволяет переносить изображения на новую строку, если не помещаются в одной */
+  gap: 25px; /* Опционально, задает расстояние между изображениями */
+}
+
+/* Контейнер для изображения и кнопки удаления */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Выравнивание содержимого по центру контейнера */
+}
+
+/* Обертка для изображения и кнопки удаления */
+.image-wrapper:hover .remove-image {
+  opacity: 1; /* Показать крестик при наведении */
+  position: relative; /* Установка относительного позиционирования для контейнера */
+  display: inline-block;
+}
+
+.image-wrapper-building:hover .remove-image-building {
+  opacity: 1; /* Показать крестик при наведении */
+
+}
+
+/* Стили для изображения */
+.img-thumbnail {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Стили для кнопки удаления */
+.delete-btn {
+  position: absolute; /* Абсолютное позиционирование кнопки */
+  top: 1px; /* Отступ сверху */
+  right: 3px; /* Отступ справа */
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer; /* Изменение курсора при наведении на кнопку */
+}
+
+/* Стили для кнопки удаления */
+.delete-btn-building {
+  position: absolute; /* Абсолютное позиционирование кнопки */
+  top: 5px; /* Отступ сверху */
+  right: 20px; /* Отступ справа */
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer; /* Изменение курсора при наведении на кнопку */
+}
+
+.remove-image-building {
+  top: 0px; /* Отступ сверху */
+  right: 60px; /* Отступ справа */
+  color: red;
+  display: inline-block;
+  background-color: none; /* Полупрозрачный фон для лучшего видимости */
+  border-radius: 50%; /* Круглый фон */
+  padding: 5px; /* Немного отступов вокруг крестика */
+  opacity: 0; /* Скрыть крестик по умолчанию */
+  transition: opacity 0.3s ease; /* Плавное появление и исчезновение крестика */
+
+}
+
+.image-container-building {
+  position: relative;
+  display: inline-block;
+}
+
+/* Скрыть стандартный элемент input типа file */
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+/* Стиль для пользовательской кнопки */
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  background-color: #fff;
+  transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* Стили для метки файла, чтобы имитировать кнопку */
+.custom-file-label {
+  display: inline-block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.custom-file-label:hover {
+  background-color: #d6d6d6;
+}
+
+.divider {
+  border-top: 1px solid #ddd;
+  margin: 30px 0;
+}
+
+.form-header {
+  display: flex;
+  align-items: center; /* Вертикальное выравнивание по центру */
+  justify-content: space-between; /* Распределение пространства между элементами */
 }

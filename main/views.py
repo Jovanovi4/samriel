@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Building, Seo, TypeChoise, Image
-from .forms import BuildingForm, SeoForm, OldBuildingForm, TypeForm, ImageForm
+from .models import Building, Seo, TypeChoise, Image, Plans
+from .forms import BuildingForm, SeoForm, OldBuildingForm, TypeForm, ImageForm, PlansForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 
 
 
@@ -68,10 +70,64 @@ def add(request, pk=None):
     return render(request, 'main/add.html', {'form': form, 'types': types})
 
 
+
+
+# @login_required
+# def edit(request, pk=None):
+#     building = None
+#     form_class = None
+#     image_form_class = None
+#     plans_form_class = None
+#     template_name = None
+
+#     if pk:
+#         building = get_object_or_404(Building, pk=pk)
+#         if building.type_choise.type_choise == '1':
+#             form_class = BuildingForm
+#             image_form_class = ImageForm
+#             template_name = 'main/edit.html'
+#         elif building.type_choise.type_choise == '2':
+#             form_class = OldBuildingForm
+#             image_form_class = ImageForm
+#             template_name = 'main/old_edit.html'
+#         else:
+#             form_class = None
+#             image_form_class = None
+
+#     if request.method == 'POST' and form_class:
+#         form = form_class(request.POST,request.FILES, instance=building)
+#         image_form = image_form_class(request.POST, request.FILES)
+
+#         if form.is_valid() and image_form.is_valid():
+#             building = form.save(commit=False)
+#             building.save()
+
+#             # Обработка изображений для слайдера
+#             images = request.FILES.getlist('image_s')
+#             for img in images:
+#                 Image.objects.create(building=building, image_s=img)
+
+#             return redirect('edit', pk=building.pk)
+#     else:
+#         form = form_class(instance=building) if form_class else None
+#         image_form = image_form_class() if image_form_class else None
+
+#  # Получение всех изображений для конкретного объекта
+#     image_list = Image.objects.filter(building=building)
+
+
+#     return render(request, template_name, {'form': form, 'image_form': image_form, 'building': building, 'image_list': image_list})
+
+
+
+
 @login_required
 def edit(request, pk=None):
     building = None
     form_class = None
+    image_form_class = None
+    plans_form_class = PlansForm  # Инициализация формы для планов
+    template_name = None
 
     if pk:
         building = get_object_or_404(Building, pk=pk)
@@ -88,10 +144,11 @@ def edit(request, pk=None):
             image_form_class = None
 
     if request.method == 'POST' and form_class:
-        form = form_class(request.POST,request.FILES, instance=building)
+        form = form_class(request.POST, request.FILES, instance=building)
         image_form = image_form_class(request.POST, request.FILES)
+        plans_form = plans_form_class(request.POST)
 
-        if form.is_valid() and image_form.is_valid():
+        if form.is_valid() and image_form.is_valid() and plans_form.is_valid():
             building = form.save(commit=False)
             building.save()
 
@@ -100,15 +157,28 @@ def edit(request, pk=None):
             for img in images:
                 Image.objects.create(building=building, image_s=img)
 
+            # Обработка планов
+            plans = plans_form.save(commit=False)
+            plans.building = building
+            plans.save()
+
             return redirect('edit', pk=building.pk)
     else:
         form = form_class(instance=building) if form_class else None
         image_form = image_form_class() if image_form_class else None
+        plans_form = plans_form_class(instance=building.plans.first()) if building and building.plans.exists() else plans_form_class()
 
- # Получение всех изображений для конкретного объекта
+    # Получение всех изображений для конкретного объекта
     image_list = Image.objects.filter(building=building)
 
-    return render(request, template_name, {'form': form, 'image_form': image_form, 'building': building, 'image_list': image_list})
+    return render(request, template_name, {
+        'form': form,
+        'image_form': image_form,
+        'building': building,
+        'image_list': image_list,
+        'plans_form': plans_form,
+    })
+
 
 @login_required
 def delete_image(request, pk):
@@ -127,4 +197,29 @@ def delete(request, pk):
         return redirect('index')
     return render(request, 'main/delete_confirm.html', {'building': building})
 
+# @login_required
+# def delete_image_building(request, building_id):
+#     building = get_object_or_404(Building, pk=building_id)
+#     if request.method == 'POST':
+#         if building.image:
+#             building.image.delete(save=False)
+#             building.image = None
+#             building.save()
+#         else:
+#             return redirect('edit', pk=building_id)
 
+#     return redirect('edit', pk=building_id)
+
+def delete_image_building(request, building_id):
+    if request.method == 'POST':
+        # В зависимости от модели, возможно, нужно будет изменить код
+        try:
+            building = get_object_or_404(Building, pk=building_id)
+            if building.image:
+                building.image.delete(save=False)
+                building.image = None
+                building.save()
+            return redirect('edit', pk=building_id)
+        except Building.DoesNotExist:
+            return JsonResponse({'status': 'error'}, status=404)
+    return redirect('edit', pk=building_id)

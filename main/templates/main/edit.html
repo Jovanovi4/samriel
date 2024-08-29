@@ -16,27 +16,27 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
         <ul class="nav nav-tabs" id="propertyTab" role="tablist" style="margin-top: 3%;">
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
                 <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">
                     <i class="fas fa-info-circle fa-sm"></i> ДАННЫЕ ПО ОБЪЕКТУ
                 </a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
                 <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">
                     <i class="fas fa-image fa-sm"></i> ИЗОБРАЖЕНИЕ НА СТРАНИЦЕ ОБЪЕКТА
                 </a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
                 <a class="nav-link" id="plan-tab" data-bs-toggle="tab" href="#plan" role="tab" aria-controls="plan" aria-selected="false">
-                    <i class="fas fa-house fa-sm"></i> ПЛАНИРОВКИ КВАРТИР
+                    <i class="fas fa-house fa-sm"></i> ПЛАНИРОВКИ
                 </a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
                 <a class="nav-link" id="site-tab" data-bs-toggle="tab" href="#site" role="tab" aria-controls="site" aria-selected="false">
                     <i class="fas fa-globe fa-sm"></i> НА САЙТАХ
                 </a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
                 <a class="nav-link" id="seo-tab" data-bs-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">
                     <i class="fas fa-search fa-sm"></i> SEO
                 </a>
@@ -125,70 +125,100 @@
             <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                 <div class="form-section">
                     <h3>Изображения</h3>
-                    <div class="form-container mt-3">
+                    <div class="form-container-image">
                         <!-- Форма для основного изображения -->
                         <div class="form-group">
-                            <label for="{{ form.image.id_for_label }}">Основное изображение</label>
-                            <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.html_name }}" class="form-control-file" />
+                            <div class="form-header">
+                                <h6>Главное фото объекта</h6>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.html_name }}" class="custom-file-input" />
+                                    <label for="{{ form.image.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                                </div>
+                            </div>
                             <div class="image-preview mt-2">
                                 <div id="imagePreviewContainerImage" class="image-preview-container">
-                                    <!-- Здесь будут отображаться предварительные изображения -->
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Основное изображение -->
                         {% if building.image %}
-                            <img src="{{ building.image.url }}" alt="Image" class="img-thumbnail" style="max-width: max; height: auto; margin-right: 10px;">
-                        {% else %}
-                            Нет изображения
+                        <div class="image-container-building">
+                            <div class="image-wrapper-building">
+                                <img src="{{ building.image.url }}" alt="Image" class="img-thumbnail">
+                                <button type="button" onclick="submitDeleteForm('{{ building.pk }}')" class="delete-btn-building">
+                                    <div class="remove-image-building">×</div>
+                                </button>
+                            </div>
+                        </div>
                         {% endif %}
-
+                        <div class="divider"></div>
+                        <!-- Форма для изображений в слайдере -->
                         <div class="form-group2">
-                            {{ image_form.image_s.label_tag }} {{ image_form.image_s }}
-                            <!-- Контейнер для предварительного просмотра изображений -->
+                            <div class="form-header">
+                                <h6>Изображение для слайдера</h6>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="{{ image_form.image_s.id_for_label }}" name="{{ image_form.image_s.html_name }}" class="custom-file-input" multiple />
+                                    <label for="{{ image_form.image_s.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                                </div>
+                            </div>
                             <div class="image-preview mt-2">
                                 <div id="imagePreviewContainerImageS" class="image-preview-container">
-                                    <!-- Здесь будут отображаться предварительные изображения -->
                                 </div>
                             </div>
                         </div>
-
-                        {% for image in image_list %}
-                        {% if image.image_s %}
-                        <div class="image-container">
-                            <img src="{{ image.image_s.url }}" alt="Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                        <!-- Изображения в слайдере -->
+                        <div class="image-gallery">
+                            {% for image in image_list %}
+                            {% if image.image_s %}
+                            <div class="image-container">
+                                <div class="image-wrapper">
+                                    <img src="{{ image.image_s.url }}" alt="Image" class="img-thumbnail" style="width: 270px; height: 156px;">
+                                    <button type="button" class="delete-btn" onclick="submitDeleteForm('{{ image.pk }}')">
+                                        <div class="remove-image">×</div>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                        <button type="button" class="delete-btn" style="border: none; background: none; color: red; font-size: 20px;" onclick="submitDeleteForm('{{ image.pk }}')">
-                            ×
-                        </button>
-                        {% endif %}
-                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка "Планировки квартир" -->
+            <div class="tab-pane fade" id="plan" role="tabpanel" aria-labelledby="plan-tab">
+                <div class="form-section">
+                    <h3>Планировки</h3>
+                    <div class="form-group">
+                        {{ plans_form.as_p }}  <!-- Убедитесь, что здесь есть форма -->
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
-    <div class="image-gallery">
-        {% for image in image_list %}
-            {% if image.image_s %}
-                <div class="image-container">
-                    <!-- Кнопка удаления -->
-                    <form action="{% url 'delete_image' image.pk %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}">
-                        {% csrf_token %}
-                    </form>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-
     <button type="button" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
+
+    {% for image in image_list %}
+    {% if image.image_s %}
+    <form action="{% url 'delete_image' image.pk %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}">
+        {% csrf_token %}
+    </form>
+    {% endif %}
+    {% endfor %}
+
+    {% if building.image %}
+    <form action="{% url 'delete_image_building' building.pk %}" method="post" class="delete-form" id="FormDelete-{{ building.pk }}">
+        {% csrf_token %}
+        <input type="hidden" name="building_id" value="{{ building.pk }}">
+    </form>
+    {% endif %}
 </div>
 
 
 
 <script>
-    document.getElementById('id_image').addEventListener('change', function(event) {
+   document.getElementById('id_image').addEventListener('change', function(event) {
     var files = event.target.files;
     var previewContainer = document.getElementById('imagePreviewContainerImage');
 
@@ -198,13 +228,37 @@
     Array.from(files).forEach(file => {
         var reader = new FileReader();
         reader.onload = function(e) {
+            var container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.display = 'inline-block';
+
             var img = document.createElement('img');
             img.src = e.target.result;
-            img.style.maxWidth = '150px';
-            img.style.maxHeight = '150px';
+            img.style.maxWidth = '400px';
+            img.style.maxHeight = '250px';
             img.style.objectFit = 'cover';
             img.style.marginRight = '10px';
-            previewContainer.appendChild(img);
+
+            var closeButton = document.createElement('button');
+            closeButton.textContent = '×'; // Или иконка крестика
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '1px';
+            closeButton.style.right = '20px';
+            closeButton.style.border = 'none';
+            closeButton.style.background = 'none';
+            closeButton.style.color = 'red';
+            closeButton.style.fontSize = '20px';
+            closeButton.style.cursor = 'pointer';
+
+            closeButton.addEventListener('click', function() {
+                // Очистка предварительного просмотра и сброс поля загрузки
+                previewContainer.innerHTML = '';
+                document.getElementById('id_image').value = ''; // Сброс поля загрузки
+            });
+
+            container.appendChild(img);
+            container.appendChild(closeButton);
+            previewContainer.appendChild(container);
         };
         reader.readAsDataURL(file);
     });
@@ -220,17 +274,42 @@ document.getElementById('id_image_s').addEventListener('change', function(event)
     Array.from(files).forEach(file => {
         var reader = new FileReader();
         reader.onload = function(e) {
+            var container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.display = 'inline-block';
+
             var img = document.createElement('img');
             img.src = e.target.result;
-            img.style.maxWidth = '150px';
-            img.style.maxHeight = '150px';
+            img.style.maxWidth = '400px';
+            img.style.maxHeight = '250px';
             img.style.objectFit = 'cover';
             img.style.marginRight = '10px';
-            previewContainer.appendChild(img);
+
+            var closeButton = document.createElement('button');
+            closeButton.textContent = '×'; // Или иконка крестика
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '1px';
+            closeButton.style.right = '20px';
+            closeButton.style.border = 'none';
+            closeButton.style.background = 'none';
+            closeButton.style.color = 'red';
+            closeButton.style.fontSize = '20px';
+            closeButton.style.cursor = 'pointer';
+
+            closeButton.addEventListener('click', function() {
+                // Очистка предварительного просмотра и сброс поля загрузки
+                previewContainer.innerHTML = '';
+                document.getElementById('id_image_s').value = ''; // Сброс поля загрузки
+            });
+
+            container.appendChild(img);
+            container.appendChild(closeButton);
+            previewContainer.appendChild(container);
         };
         reader.readAsDataURL(file);
     });
 });
+
 
 document.getElementById('externalSubmitButton').addEventListener('click', function() {
         document.getElementById('Form_id2').submit();
@@ -242,6 +321,35 @@ function submitDeleteForm(imageId) {
         form.submit();
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Восстановление состояния активной вкладки
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        // Удаление классов активных вкладок
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+            link.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-pane').forEach(function(pane) {
+            pane.classList.remove('show', 'active');
+        });
+        // Установка активного состояния
+        var activeLink = document.querySelector(`a[href="${activeTab}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            document.querySelector(activeTab).classList.add('show', 'active');
+        }
+    }
+});
+
+// Обработка кликов по вкладкам
+document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+        var target = link.getAttribute('href');
+        localStorage.setItem('activeTab', target);
+    });
+});
 
 </script>
 

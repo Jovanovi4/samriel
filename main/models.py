@@ -70,3 +70,14 @@ class Seo(models.Model):
 class Image(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='images')
     image_s = models.ImageField(blank=True, upload_to='slyder_images/')
+    image_plans = models.ImageField(blank=True, upload_to='plans_images/')
+
+class Plans(models.Model):
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='plans')
+    type_building = models.CharField('Тип жилья', max_length=255, blank=True, null=True) 
+    quanty_room = models.IntegerField('Колличество комнат', blank=True, null=True)
+    total_area_from = models.IntegerField('Общая площадь от', blank=True, null=True)
+    total_area_upto = models.IntegerField('Общая площадь до', blank=True, null=True)
+    price_from = models.IntegerField('Общая площадь до', blank=True, null=True)
+    price_upto = models.IntegerField('Общая площадь до', blank=True, null=True)
+    description = models.TextField('Описание', blank=True, null=True)

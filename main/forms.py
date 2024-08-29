@@ -1,5 +1,5 @@
 from django import forms
-from .models import Building, Seo, TypeChoise, Image
+from .models import Building, Seo, TypeChoise, Image, Plans
 
 
 class TypeForm(forms.ModelForm):
@@ -152,6 +152,7 @@ class OldBuildingForm(forms.ModelForm):
             'square',
             'floor',
             'all_floor',
+            'image',
             'description1',
             'price',
             'video',
@@ -184,9 +185,8 @@ class OldBuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
-            'deadline': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': ''
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
             }),
             'category': forms.Select(attrs={
                 'class': 'form-control',
@@ -227,6 +227,14 @@ class OldBuildingForm(forms.ModelForm):
 
 
         }
+
+
+class PlansForm(forms.ModelForm):
+    class Meta:
+        model = Plans
+        fields = ['type_building', 'quanty_room', 'total_area_from', 'total_area_upto',
+                  'price_from', 'price_upto', 'description',]
+
 
        
 class SeoForm(forms.ModelForm):
