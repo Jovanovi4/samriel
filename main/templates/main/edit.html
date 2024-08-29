@@ -12,17 +12,34 @@
 <div class="main-content">
     <h1>{{ building.title }}</h1>
     <p>{{ building.type_choise.get_type_choise_display }}</p>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="Form_id2">
         {% csrf_token %}
-        <ul class="nav nav-tabs" id="propertyTab" role="tablist">
+        <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
+        <ul class="nav nav-tabs" id="propertyTab" role="tablist" style="margin-top: 3%;">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">Общие данные</a>
+                <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">
+                    <i class="fas fa-info-circle fa-sm"></i> ДАННЫЕ ПО ОБЪЕКТУ
+                </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Изображение</a>
+                <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">
+                    <i class="fas fa-image fa-sm"></i> ИЗОБРАЖЕНИЕ НА СТРАНИЦЕ ОБЪЕКТА
+                </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="seo-tab" data-bs-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">SEO</a>
+                <a class="nav-link" id="plan-tab" data-bs-toggle="tab" href="#plan" role="tab" aria-controls="plan" aria-selected="false">
+                    <i class="fas fa-house fa-sm"></i> ПЛАНИРОВКИ КВАРТИР
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="site-tab" data-bs-toggle="tab" href="#site" role="tab" aria-controls="site" aria-selected="false">
+                    <i class="fas fa-globe fa-sm"></i> НА САЙТАХ
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="seo-tab" data-bs-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">
+                    <i class="fas fa-search fa-sm"></i> SEO
+                </a>
             </li>
         </ul>
 
@@ -65,28 +82,22 @@
                             {{ form.about_after_slide.label_tag }} {{ form.about_after_slide }}
                         </div>
                     </div>
-                    <div class="form-group form-inline">
-                        <div class="inline-field">
-                            <h3>Видео</h3>
-                            <div class="form-container mt-3">
-                                <div class="form-group">
-                                    {{ form.video_name.label_tag }} {{ form.video_name }}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.video.label_tag }} {{ form.video }}
-                                </div>
-                            </div>
+                    <h3>Видео</h3>
+                    <div class="form-container mt-3">
+                        <div class="form-group">
+                            {{ form.video_name.label_tag }} {{ form.video_name }}
                         </div>
-                        <div class="inline-field">
-                            <h3>Местоположение</h3>
-                            <div class="form-container mt-3">
-                                <div class="form-group">
-                                    {{ form.location.label_tag }} {{ form.location }}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.adres.label_tag }} {{ form.adres }}
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            {{ form.video.label_tag }} {{ form.video }}
+                        </div>
+                    </div>
+                    <h3>Местоположение</h3>
+                    <div class="form-container mt-3">
+                        <div class="form-group">
+                            {{ form.location.label_tag }} {{ form.location }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.adres.label_tag }} {{ form.adres }}
                         </div>
                     </div>
                     <h3>Характеристики</h3>
@@ -100,17 +111,141 @@
                     </div>
                     <h3>Преимущества</h3>
                     <div class="form-container mt-3">
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             {{ form.advantages.label_tag }} {{ form.advantages }}
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             {{ form.deteil_description.label_tag }} {{ form.deteil_description }}
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+                </div>
+            </div>
+
+            <!-- Вкладка "Изображения" -->
+            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                <div class="form-section">
+                    <h3>Изображения</h3>
+                    <div class="form-container mt-3">
+                        <!-- Форма для основного изображения -->
+                        <div class="form-group">
+                            <label for="{{ form.image.id_for_label }}">Основное изображение</label>
+                            <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.html_name }}" class="form-control-file" />
+                            <div class="image-preview mt-2">
+                                <div id="imagePreviewContainerImage" class="image-preview-container">
+                                    <!-- Здесь будут отображаться предварительные изображения -->
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if building.image %}
+                            <img src="{{ building.image.url }}" alt="Image" class="img-thumbnail" style="max-width: max; height: auto; margin-right: 10px;">
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+
+                        <div class="form-group2">
+                            {{ image_form.image_s.label_tag }} {{ image_form.image_s }}
+                            <!-- Контейнер для предварительного просмотра изображений -->
+                            <div class="image-preview mt-2">
+                                <div id="imagePreviewContainerImageS" class="image-preview-container">
+                                    <!-- Здесь будут отображаться предварительные изображения -->
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for image in image_list %}
+                        {% if image.image_s %}
+                        <div class="image-container">
+                            <img src="{{ image.image_s.url }}" alt="Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                        </div>
+                        <button type="button" class="delete-btn" style="border: none; background: none; color: red; font-size: 20px;" onclick="submitDeleteForm('{{ image.pk }}')">
+                            ×
+                        </button>
+                        {% endif %}
+                         {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </form>
+
+    <div class="image-gallery">
+        {% for image in image_list %}
+            {% if image.image_s %}
+                <div class="image-container">
+                    <!-- Кнопка удаления -->
+                    <form action="{% url 'delete_image' image.pk %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <button type="button" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
 </div>
+
+
+
+<script>
+    document.getElementById('id_image').addEventListener('change', function(event) {
+    var files = event.target.files;
+    var previewContainer = document.getElementById('imagePreviewContainerImage');
+
+    // Очистка контейнера предварительного просмотра
+    previewContainer.innerHTML = '';
+
+    Array.from(files).forEach(file => {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '150px';
+            img.style.maxHeight = '150px';
+            img.style.objectFit = 'cover';
+            img.style.marginRight = '10px';
+            previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
+document.getElementById('id_image_s').addEventListener('change', function(event) {
+    var files = event.target.files;
+    var previewContainer = document.getElementById('imagePreviewContainerImageS');
+
+    // Очистка контейнера предварительного просмотра
+    previewContainer.innerHTML = '';
+
+    Array.from(files).forEach(file => {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '150px';
+            img.style.maxHeight = '150px';
+            img.style.objectFit = 'cover';
+            img.style.marginRight = '10px';
+            previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
+document.getElementById('externalSubmitButton').addEventListener('click', function() {
+        document.getElementById('Form_id2').submit();
+    });
+
+function submitDeleteForm(imageId) {
+    var form = document.getElementById('FormDelete-' + imageId);
+    if (form) {
+        form.submit();
+    }
+}
+
+</script>
+
+
+
+
 {% endblock %}

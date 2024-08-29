@@ -1,5 +1,5 @@
 from django import forms
-from .models import Building, Seo, TypeChoise
+from .models import Building, Seo, TypeChoise, Image
 
 
 class TypeForm(forms.ModelForm):
@@ -18,8 +18,34 @@ class TypeForm(forms.ModelForm):
             }),
         }
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
 
 
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        # Используем стандартную обработку, но поддерживаем несколько файлов
+        if isinstance(data, (list, tuple)):
+            result = [super().clean(d, initial) for d in data]
+        else:
+            result = [super().clean(data, initial)]
+        return result
+
+
+
+class ImageForm(forms.ModelForm):
+    image_s = MultipleFileField(
+        label="Изображения для слайдера",
+        required=False
+    )
+
+    class Meta:
+        model = Image
+        fields = ['image_s']
 
 
 class BuildingForm(forms.ModelForm):
@@ -30,9 +56,8 @@ class BuildingForm(forms.ModelForm):
             'top_description',
             'down_description',
             'deadline',
-            'image',
-            'image_slider',
             'jarlyk',
+            'image',
             'about_before_slide',
             'about_after_slide',
             'category',
@@ -63,15 +88,12 @@ class BuildingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': ''
             }),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
-            }),
-            'image_slider': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
-            }),
             'jarlyk': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': ''
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
             }),
             'about_before_slide': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -132,8 +154,6 @@ class OldBuildingForm(forms.ModelForm):
             'all_floor',
             'description1',
             'price',
-            'image',
-            'image_slider',
             'video',
             'location',
             'adres',
@@ -167,12 +187,6 @@ class OldBuildingForm(forms.ModelForm):
             'deadline': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': ''
-            }),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
-            }),
-            'image_slider': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
             }),
             'category': forms.Select(attrs={
                 'class': 'form-control',
@@ -215,9 +229,6 @@ class OldBuildingForm(forms.ModelForm):
         }
 
        
-
-
-        
 class SeoForm(forms.ModelForm):
     class Meta:
         model = Seo

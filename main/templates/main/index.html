@@ -11,11 +11,20 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="m-0">Все объекты недвижимости</p>
         <a href="{% url 'add' %}" class="w-30 btn btn-primary">
-            <i class="fas fa-plus-circle"></i> Добавить недвижимость
+            <i class="fas fa-house fa-sm"></i> Добавить недвижимость
         </a>
     </div>
 
-    {% if page_obj.object_list %}
+    <!-- Форма поиска -->
+    <form method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Поиск по названию...">
+            
+        </div>
+    </form>
+
+
+    {% if page_obj %}
     <div class="table-wrapper">
         <div class="table-container shadow p-4 mb-5 mt-3 bg-white rounded">
             <table class="table table-hover table-fixed-height">
@@ -25,37 +34,30 @@
                         <th class="title-column">
                             <div class="sort-title">
                                 Название
-                                <div class="sort-container">
-                                    <a href="?sort=-id{% if page_obj.has_other_pages %}&page={{ page_obj.number }}{% endif %}" class="sort-link">
-                                        <i class="bi bi-caret-down-fill"></i> <!-- Стрелочка вниз -->
-                                    </a>
-                                </div>
                             </div>
                         </th>
                         <th class="actions-column">Действия</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in page_obj %}
+                    {% for building in page_obj %}
                     <tr>
                         <td class="image-column">
-                            {% if item.image %}
-                            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid" style="width: 100px; height: 70px;">
+                            {% if building.image %}
+                            <img src="{{ building.image.url }}" alt="{{ item.title }}" class="img-fluid" style="width: 120px; height: 70px; border: 1px solid #ddd;  border-radius: 2px; padding: 2px;">
                             {% else %}
                             Нет изображения
                             {% endif %}
                         </td>
-                        <td class="title-column"><a href="{% url 'edit' pk=item.pk %}">{{ item.title }}</a></td>
+                        <td class="title-column">
+                            <a href="{% url 'edit' pk=building.pk %}">{{ building.title }}</a>
+                        </td>
                         <td class="actions-column text-end">
-                            <!-- Кнопка для редактирования записи -->
-                            <a href="{% url 'edit' pk=item.pk %}" class="btn btn-success btn-sm" title="Редактировать">
-                                <i class="bi bi-pencil"></i> <!-- Иконка карандаша для редактирования -->
-                            </a>
-                            <!-- Форма для удаления записи -->
-                            <form action="{% url 'delete' pk=item.pk %}" method="post" style="display:inline;">
+                            <!-- Форма для удаления записи с красной иконкой -->
+                            <form action="{% url 'delete' pk=building.pk %}" method="post" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Вы уверены, что хотите удалить эту запись?');">
-                                    <i class="bi bi-trash"></i> <!-- Иконка корзины из Bootstrap Icons -->
+                                <button type="submit" style="border:none; background:none; padding:0;" onclick="return confirm('Вы уверены, что хотите удалить эту запись?');" class="text-danger">
+                                    <i class="bi bi-trash"></i> <!-- Иконка корзины красного цвета -->
                                 </button>
                             </form>
                         </td>

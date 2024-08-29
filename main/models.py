@@ -29,17 +29,16 @@ class Building(models.Model):
     ]
     
     type_choise = models.ForeignKey(TypeChoise, on_delete=models.CASCADE)
-    title = models.CharField('Наименование объекта', max_length=255, blank=True, null=True, default="") 
+    title = models.CharField('Наименование объекта', max_length=255, blank=True, null=True, default="Без названия") 
     top_description = models.CharField('Текст над названием', max_length=255, blank=True, null=True) 
     down_description = models.CharField('Текст под названием', max_length=255, blank=True, null=True) 
     deadline = models.CharField('Срок сдачи', max_length=255, blank=True, null=True)
     description1 = models.TextField('Описание', blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='images/')
-    image_slider = models.ImageField(blank=True, null=True, upload_to='images/')
+    image = models.ImageField('Главное фото объекта', blank=True, upload_to='images/')
     jarlyk = models.CharField('Ярлык', max_length=255, blank=True, null=True)
     about_before_slide = models.TextField('Описание до слайдера', blank=True, null=True)
     about_after_slide = models.TextField('Описание после слайдера', blank=True, null=True)
-    category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOISE, default='house', blank=True)
+    category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOISE, default='1', blank=True)
     video_name = models.CharField('Заголовок видео', max_length=255, blank=True, null=True) 
     video = models.CharField('Видео с YouTube', max_length=255, blank=True, null=True)
     location = models.CharField('Координаты на карте', max_length=255, blank=True, null=True)
@@ -66,3 +65,8 @@ class Seo(models.Model):
 
     def __str__(self):
         return self.name or "Без названия"
+
+
+class Image(models.Model):
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='images')
+    image_s = models.ImageField(blank=True, upload_to='slyder_images/')
