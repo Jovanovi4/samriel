@@ -315,6 +315,7 @@ body {
 .image-container-building {
   position: relative;
   display: inline-block;
+  width: 50%;
 }
 
 /* Скрыть стандартный элемент input типа file */

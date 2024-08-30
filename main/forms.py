@@ -36,6 +36,16 @@ class MultipleFileField(forms.FileField):
         return result
 
 
+class ImagePlansForm(forms.ModelForm):
+    image_plans = MultipleFileField(
+        label="Планировки",
+        required=False
+    )
+    class Meta:
+        model = Image
+        fields = ['image_plans']
+
+
 
 class ImageForm(forms.ModelForm):
     image_s = MultipleFileField(
@@ -46,6 +56,7 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['image_s']
+
 
 
 class BuildingForm(forms.ModelForm):
@@ -230,10 +241,43 @@ class OldBuildingForm(forms.ModelForm):
 
 
 class PlansForm(forms.ModelForm):
+    plan_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     class Meta:
         model = Plans
         fields = ['type_building', 'quanty_room', 'total_area_from', 'total_area_upto',
                   'price_from', 'price_upto', 'description',]
+        
+        widgets = {
+            'type_building': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Студии, 1-комнатные, 2-комнатные'
+            }),
+            'quanty_room': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '1, 2, 3'
+            }),
+            'total_area_from': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '42,5'
+            }),
+            'total_area_upto': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '42,5'
+            }),
+            'price_from': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '3000000'
+            }),
+           'price_upto': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '3000000'
+            }),
+           'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+
+        }
 
 
        

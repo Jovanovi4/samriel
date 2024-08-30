@@ -78,6 +78,9 @@ class Plans(models.Model):
     quanty_room = models.IntegerField('Колличество комнат', blank=True, null=True)
     total_area_from = models.IntegerField('Общая площадь от', blank=True, null=True)
     total_area_upto = models.IntegerField('Общая площадь до', blank=True, null=True)
-    price_from = models.IntegerField('Общая площадь до', blank=True, null=True)
-    price_upto = models.IntegerField('Общая площадь до', blank=True, null=True)
+    price_from = models.IntegerField('Цена от', blank=True, null=True)
+    price_upto = models.IntegerField('Цена до', blank=True, null=True)
     description = models.TextField('Описание', blank=True, null=True)
+            
+    
+    

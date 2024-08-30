@@ -185,19 +185,91 @@
                 </div>
             </div>
 
-            <!-- Вкладка "Планировки квартир" -->
+           <!-- Вкладка "Планировки квартир" -->
             <div class="tab-pane fade" id="plan" role="tabpanel" aria-labelledby="plan-tab">
                 <div class="form-section">
-                    <h3>Планировки</h3>
-                    <div class="form-group">
-                        {{ plans_form.as_p }}  <!-- Убедитесь, что здесь есть форма -->
+          <h3>Планировки</h3>
+          {{ plans_form.plan_id }}
+            <div class="form-container mt-3">
+                <div class="form-group">
+                    {{ plans_form.type_building.label_tag }} {{ plans_form.type_building }}
+                </div>
+                <div class="form-group">
+                    {{ plans_form.quanty_room.label_tag }} {{ plans_form.quanty_room }}
+                </div>
+                <div class="form-group form-inline">
+                    <div class="inline-field">
+                        {{ plans_form.total_area_from.label_tag }} {{ plans_form.total_area_from }}
+                    </div>
+                    <div class="inline-field">
+                        {{ plans_form.total_area_upto.label_tag }} {{ plans_form.total_area_upto }}
+                    </div>
+                    <div class="inline-field">
+                        {{ plans_form.price_from.label_tag }} {{ plans_form.price_from }}
+                    </div>
+                    <div class="inline-field">
+                        {{ plans_form.price_upto.label_tag }} {{ plans_form.price_upto }}
                     </div>
                 </div>
-            </div>
-        </div>
-    </form>
+                <div class="form-group">
+                    {{ plans_form.description.label_tag }} {{ plans_form.description }}
+                </div>
 
-    <button type="button" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
+                        <h6>Планировки:</h6>
+                        <div class="custom-file-upload">
+                            <input type="file" id="{{ image_form.image_plans.id_for_label }}" name="{{ image_form.image_plans.html_name }}" class="custom-file-input" multiple />
+                            <label for="{{ image_form.image_plans.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                        </div>
+                        <h6>Планировки:</h6>
+                        <ul>
+                            {% for plan in plans_list %}
+                                <li>
+                                    <a href="#" 
+                                    class="select-plan-link"
+                                    data-plan-id="{{ plan.id }}"
+                                    data-type-building="{{ plan.type_building }}"
+                                    data-quanty-room="{{ plan.quanty_room }}"
+                                    data-total-area-from="{{ plan.total_area_from }}"
+                                    data-total-area-upto="{{ plan.total_area_upto }}"
+                                    data-price-from="{{ plan.price_from }}"
+                                    data-price-upto="{{ plan.price_upto }}"
+                                    data-description="{{ plan.description }}">
+                                        {{ plan.type_building|default_if_none:"" }} - {{ plan.quanty_room|default_if_none:"" }} комнат - 
+                                        Площадь от {{ plan.total_area_from|default_if_none:"" }} до {{ plan.total_area_upto|default_if_none:"" }} м², 
+                                        Цена от {{ plan.price_from|default_if_none:"" }} до {{ plan.price_upto|default_if_none:"" }}
+                                    </a>
+
+                                    <!-- Кнопка удаления для каждого плана -->
+                                    <button type="button" style="border:none; background:none; padding:0;" 
+                                            class="text-danger" 
+                                            onclick="submitDeleteForm('{{ plan.pk }}')">
+                                        <i class="bi bi-trash"></i> <!-- Иконка корзины красного цвета -->
+                                    </button>
+
+                                </li>
+                            {% empty %}
+                                <li>Нет добавленных планировок.</li>
+                            {% endfor %}
+                        </ul>
+
+                        
+                    </div>
+            </div>
+        </div>  
+    </div>
+</form>
+<button type="submit" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
+
+
+{% for plans in plans_list %}
+{% if plans %}
+<form action="{% url 'delete_plans' plans.pk %}" method="post" class="delete-form" id="FormDelete-{{ plans.pk }}">
+    {% csrf_token %}
+</form> 
+{% endif %}
+{% endfor %}
+
+
 
     {% for image in image_list %}
     {% if image.image_s %}
@@ -218,113 +290,144 @@
 
 
 <script>
-   document.getElementById('id_image').addEventListener('change', function(event) {
-    var files = event.target.files;
-    var previewContainer = document.getElementById('imagePreviewContainerImage');
+  function setupImagePreview(inputId, previewContainerId) {
+    document.getElementById(inputId).addEventListener('change', function(event) {
+        var files = event.target.files;
+        var previewContainer = document.getElementById(previewContainerId);
 
-    // Очистка контейнера предварительного просмотра
-    previewContainer.innerHTML = '';
+        // Очистка контейнера предварительного просмотра
+        previewContainer.innerHTML = '';
 
-    Array.from(files).forEach(file => {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var container = document.createElement('div');
-            container.style.position = 'relative';
-            container.style.display = 'inline-block';
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var container = document.createElement('div');
+                container.style.position = 'relative';
+                container.style.display = 'inline-block';
 
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '400px';
-            img.style.maxHeight = '250px';
-            img.style.objectFit = 'cover';
-            img.style.marginRight = '10px';
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '400px';
+                img.style.maxHeight = '250px';
+                img.style.objectFit = 'cover';
+                img.style.marginRight = '10px';
 
-            var closeButton = document.createElement('button');
-            closeButton.textContent = '×'; // Или иконка крестика
-            closeButton.style.position = 'absolute';
-            closeButton.style.top = '1px';
-            closeButton.style.right = '20px';
-            closeButton.style.border = 'none';
-            closeButton.style.background = 'none';
-            closeButton.style.color = 'red';
-            closeButton.style.fontSize = '20px';
-            closeButton.style.cursor = 'pointer';
+                var closeButton = document.createElement('button');
+                closeButton.textContent = '×'; // Или иконка крестика
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '1px';
+                closeButton.style.right = '20px';
+                closeButton.style.border = 'none';
+                closeButton.style.background = 'none';
+                closeButton.style.color = 'red';
+                closeButton.style.fontSize = '20px';
+                closeButton.style.cursor = 'pointer';
 
-            closeButton.addEventListener('click', function() {
-                // Очистка предварительного просмотра и сброс поля загрузки
-                previewContainer.innerHTML = '';
-                document.getElementById('id_image').value = ''; // Сброс поля загрузки
-            });
+                closeButton.addEventListener('click', function() {
+                    // Очистка предварительного просмотра и сброс поля загрузки
+                    previewContainer.innerHTML = '';
+                    document.getElementById(inputId).value = ''; // Сброс поля загрузки
+                });
 
-            container.appendChild(img);
-            container.appendChild(closeButton);
-            previewContainer.appendChild(container);
-        };
-        reader.readAsDataURL(file);
+                container.appendChild(img);
+                container.appendChild(closeButton);
+                previewContainer.appendChild(container);
+            };
+            reader.readAsDataURL(file);
+        });
     });
-});
+}
 
-document.getElementById('id_image_s').addEventListener('change', function(event) {
-    var files = event.target.files;
-    var previewContainer = document.getElementById('imagePreviewContainerImageS');
+// Инициализация предварительного просмотра для каждого элемента
+setupImagePreview('id_image', 'imagePreviewContainerImage');
+setupImagePreview('id_image_s', 'imagePreviewContainerImageS');
 
-    // Очистка контейнера предварительного просмотра
-    previewContainer.innerHTML = '';
-
-    Array.from(files).forEach(file => {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var container = document.createElement('div');
-            container.style.position = 'relative';
-            container.style.display = 'inline-block';
-
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '400px';
-            img.style.maxHeight = '250px';
-            img.style.objectFit = 'cover';
-            img.style.marginRight = '10px';
-
-            var closeButton = document.createElement('button');
-            closeButton.textContent = '×'; // Или иконка крестика
-            closeButton.style.position = 'absolute';
-            closeButton.style.top = '1px';
-            closeButton.style.right = '20px';
-            closeButton.style.border = 'none';
-            closeButton.style.background = 'none';
-            closeButton.style.color = 'red';
-            closeButton.style.fontSize = '20px';
-            closeButton.style.cursor = 'pointer';
-
-            closeButton.addEventListener('click', function() {
-                // Очистка предварительного просмотра и сброс поля загрузки
-                previewContainer.innerHTML = '';
-                document.getElementById('id_image_s').value = ''; // Сброс поля загрузки
-            });
-
-            container.appendChild(img);
-            container.appendChild(closeButton);
-            previewContainer.appendChild(container);
-        };
-        reader.readAsDataURL(file);
-    });
-});
 
 
 document.getElementById('externalSubmitButton').addEventListener('click', function() {
         document.getElementById('Form_id2').submit();
     });
 
+
+ // Функция для формы удаления изображений
 function submitDeleteForm(imageId) {
     var form = document.getElementById('FormDelete-' + imageId);
     if (form) {
         form.submit();
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
 
+function clearPlanTabFields() {
+    // Очистка полей формы во вкладке "Планировки квартир"
+    var planTab = document.getElementById('plan');
+    if (planTab) {
+        // Очистка всех текстовых полей и текстовых областей
+        planTab.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(function(element) {
+            element.value = '';
+        });
+
+        // Очистка всех файлов
+        planTab.querySelectorAll('input[type="file"]').forEach(function(fileInput) {
+            fileInput.value = ''; // Очистка значения файла
+            var previewContainer = fileInput.nextElementSibling; // Предполагается, что предварительный просмотр следует сразу после input
+            if (previewContainer && previewContainer.classList.contains('image-preview-container')) {
+                previewContainer.innerHTML = ''; // Очистка предварительного просмотра
+            }
+        });
+
+        // Очистка списка планов (если нужно)
+        var planList = document.getElementById('plan-list');
+        if (planList) {
+            planList.innerHTML = ''; // Очистка списка планов
+        }
+    }
+}
+
+// Очистка формы только во вкладке "Планировки квартир" при загрузке страницы
+clearPlanTabFields();
+
+
+// Обработка кликов по ссылкам с планами
+document.querySelectorAll('.select-plan-link').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Получаем данные из атрибутов ссылки
+        const planId = link.getAttribute('data-plan-id');
+        const typeBuilding = link.getAttribute('data-type-building');
+        const quantyRoom = link.getAttribute('data-quanty-room');
+        const totalAreaFrom = link.getAttribute('data-total-area-from');
+        const totalAreaUpto = link.getAttribute('data-total-area-upto');
+        const priceFrom = link.getAttribute('data-price-from');
+        const priceUpto = link.getAttribute('data-price-upto');
+        const description = link.getAttribute('data-description');
+
+        // Устанавливаем значения в форму
+        document.getElementById('id_plan_id').value = planId;
+        document.getElementById('id_type_building').value = typeBuilding;
+        document.getElementById('id_quanty_room').value = quantyRoom;
+        document.getElementById('id_total_area_from').value = totalAreaFrom;
+        document.getElementById('id_total_area_upto').value = totalAreaUpto;
+        document.getElementById('id_price_from').value = priceFrom;
+        document.getElementById('id_price_upto').value = priceUpto;
+        document.getElementById('id_description').value = description;
+    });
+});
+});
+
+
+// Код для сохранения activeTab при клике на вкладку
+document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+        var target = link.getAttribute('href');
+        localStorage.setItem('activeTab', target);
+        console.log('Tab clicked, activeTab saved to localStorage:', target);
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Восстановление состояния активной вкладки
+    // Восстановление состояния вкладок
     var activeTab = localStorage.getItem('activeTab');
     if (activeTab) {
         // Удаление классов активных вкладок
@@ -334,20 +437,25 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.tab-pane').forEach(function(pane) {
             pane.classList.remove('show', 'active');
         });
+
         // Установка активного состояния
         var activeLink = document.querySelector(`a[href="${activeTab}"]`);
+        var activePane = document.querySelector(activeTab);
+        
         if (activeLink) {
             activeLink.classList.add('active');
-            document.querySelector(activeTab).classList.add('show', 'active');
+        }
+        if (activePane) {
+            activePane.classList.add('show', 'active');
         }
     }
-});
 
-// Обработка кликов по вкладкам
-document.querySelectorAll('.nav-link').forEach(function(link) {
-    link.addEventListener('click', function() {
-        var target = link.getAttribute('href');
-        localStorage.setItem('activeTab', target);
+    // Обработка кликов по вкладкам
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            var target = link.getAttribute('href');
+            localStorage.setItem('activeTab', target);
+        });
     });
 });
 
