@@ -185,78 +185,147 @@
                 </div>
             </div>
 
-           <!-- Вкладка "Планировки квартир" -->
             <div class="tab-pane fade" id="plan" role="tabpanel" aria-labelledby="plan-tab">
                 <div class="form-section">
-          <h3>Планировки</h3>
-          {{ plans_form.plan_id }}
-            <div class="form-container mt-3">
-                <div class="form-group">
-                    {{ plans_form.type_building.label_tag }} {{ plans_form.type_building }}
-                </div>
-                <div class="form-group">
-                    {{ plans_form.quanty_room.label_tag }} {{ plans_form.quanty_room }}
-                </div>
-                <div class="form-group form-inline">
-                    <div class="inline-field">
-                        {{ plans_form.total_area_from.label_tag }} {{ plans_form.total_area_from }}
-                    </div>
-                    <div class="inline-field">
-                        {{ plans_form.total_area_upto.label_tag }} {{ plans_form.total_area_upto }}
-                    </div>
-                    <div class="inline-field">
-                        {{ plans_form.price_from.label_tag }} {{ plans_form.price_from }}
-                    </div>
-                    <div class="inline-field">
-                        {{ plans_form.price_upto.label_tag }} {{ plans_form.price_upto }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ plans_form.description.label_tag }} {{ plans_form.description }}
-                </div>
-
-                        <h6>Планировки:</h6>
-                        <div class="custom-file-upload">
-                            <input type="file" id="{{ image_form.image_plans.id_for_label }}" name="{{ image_form.image_plans.html_name }}" class="custom-file-input" multiple />
-                            <label for="{{ image_form.image_plans.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                    <h3>Планировки</h3>
+                    {{ plans_form.plan_id }}
+                    <div class="form-and-list-container">
+                        <div class="form-container-plans mt-3">
+                            <div class="form-group">
+                                {{ plans_form.type_building.label_tag }} {{ plans_form.type_building }}
+                            </div>
+                            <div class="form-group">
+                                {{ plans_form.quanty_room.label_tag }} {{ plans_form.quanty_room }}
+                            </div>
+                            <div class="form-group form-inline">
+                                <div class="inline-field">
+                                    {{ plans_form.total_area_from.label_tag }} {{ plans_form.total_area_from }}
+                                </div>
+                                <div class="inline-field">
+                                    {{ plans_form.total_area_upto.label_tag }} {{ plans_form.total_area_upto }}
+                                </div>
+                                <div class="inline-field">
+                                    {{ plans_form.price_from.label_tag }} {{ plans_form.price_from }}
+                                </div>
+                                <div class="inline-field">
+                                    {{ plans_form.price_upto.label_tag }} {{ plans_form.price_upto }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ plans_form.description.label_tag }} {{ plans_form.description }}
+                            </div>
+            
+                            <h6>Планировки:</h6>
+                            <div class="custom-file-upload">
+                                <input type="file" 
+                                       id="{{ image_plans_form.image_plans.id_for_label }}" 
+                                       name="{{ image_plans_form.image_plans.html_name }}" 
+                                       class="custom-file-input" 
+                                       multiple />
+                                <label for="{{ image_plans_form.image_plans.id_for_label }}" 
+                                       class="custom-file-label">
+                                    Выберите файл
+                                </label>
+                            </div>
+                            <div class="image-preview mt-2">
+                                <div id="imagePreviewContainerImagePlans" 
+                                     class="image-preview-container">
+                                </div>
+                            </div>
                         </div>
-                        <h6>Планировки:</h6>
-                        <ul>
+            
+                        <div class="plans-list-container mt-3">
                             {% for plan in plans_list %}
-                                <li>
-                                    <a href="#" 
-                                    class="select-plan-link"
-                                    data-plan-id="{{ plan.id }}"
-                                    data-type-building="{{ plan.type_building }}"
-                                    data-quanty-room="{{ plan.quanty_room }}"
-                                    data-total-area-from="{{ plan.total_area_from }}"
-                                    data-total-area-upto="{{ plan.total_area_upto }}"
-                                    data-price-from="{{ plan.price_from }}"
-                                    data-price-upto="{{ plan.price_upto }}"
-                                    data-description="{{ plan.description }}">
-                                        {{ plan.type_building|default_if_none:"" }} - {{ plan.quanty_room|default_if_none:"" }} комнат - 
-                                        Площадь от {{ plan.total_area_from|default_if_none:"" }} до {{ plan.total_area_upto|default_if_none:"" }} м², 
-                                        Цена от {{ plan.price_from|default_if_none:"" }} до {{ plan.price_upto|default_if_none:"" }}
-                                    </a>
+                            <div class="form-container-3">
+                                <ul>
+                                    <li>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>Тип здания</th>
+                                                <td>{{ plan.type_building|default_if_none:"" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Количество комнат</th>
+                                                <td>{{ plan.quanty_room|default_if_none:"" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Площадь</th>
+                                                <td>
+                                                    от {{ plan.total_area_from|default_if_none:"" }} м² 
+                                                    до {{ plan.total_area_upto|default_if_none:"" }} м²
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Цена</th>
+                                                <td>
+                                                    от {{ plan.price_from|default_if_none:"" }} руб. 
+                                                    до {{ plan.price_upto|default_if_none:"" }} руб.
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <button type="button" class="btn btn-primary btn-sm edit-plan-btn"
+                                                data-plan-id="{{ plan.id }}"
+                                                data-type-building="{{ plan.type_building }}"
+                                                data-quanty-room="{{ plan.quanty_room }}"
+                                                data-total-area-from="{{ plan.total_area_from }}"
+                                                data-total-area-upto="{{ plan.total_area_upto }}"
+                                                data-price-from="{{ plan.price_from }}"
+                                                data-price-upto="{{ plan.price_upto }}"
+                                                data-description="{{ plan.description }}">
+                                            <i class="bi bi-pencil-square"> Редактировать</i>
 
-                                    <!-- Кнопка удаления для каждого плана -->
-                                    <button type="button" style="border:none; background:none; padding:0;" 
-                                            class="text-danger" 
-                                            onclick="submitDeleteForm('{{ plan.pk }}')">
-                                        <i class="bi bi-trash"></i> <!-- Иконка корзины красного цвета -->
-                                    </button>
+                                        </button>
+                                        <!-- Кнопка удаления для каждого плана -->
+                                        <button type="button" 
+                                        class="btn btn-danger btn-sm" 
+                                        onclick="submitDeleteForm('{{ plan.pk }}')">
+                                    <i class="bi bi-trash"> Удалить</i>
+                                </button>
+                                        
+                        
+                                        <!-- Изображения, связанные с этим планом -->
 
-                                </li>
+                                        <div class="image-container-plans">
+                                            {% for image in plan.images.all %}
+                                                {% if image.image_plans %}
+                                                <div class="image-container">
+                                                    <div class="image-wrapper-plans">
+                                                        <img src="{{ image.image_plans.url }}" 
+                                                             alt="Image" 
+                                                             class="img-thumbnail">
+                                                        <button type="button" class="delete-btn" onclick="submitDeleteForm('{{ image.pk }}')">
+                                                            <div class="remove-image">×</div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            {% empty %}
+                                            <p>Нет изображений для этого плана.</p>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                             {% empty %}
-                                <li>Нет добавленных планировок.</li>
+                            <p>Нет добавленных планировок.</p>
                             {% endfor %}
-                        </ul>
-
+                        </div>
                         
                     </div>
+                </div>
             </div>
-        </div>  
-    </div>
+            <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+                <div class="form-section">
+                    <h3>SEO</h3>
+                    <div class="form-container mt-3">
+                    <div class="form-group">
+                        {{ seo_form.as_p }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            
 </form>
 <button type="submit" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
 
@@ -269,11 +338,9 @@
 {% endif %}
 {% endfor %}
 
-
-
     {% for image in image_list %}
     {% if image.image_s %}
-    <form action="{% url 'delete_image' image.pk %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}">
+    <form action="{% url 'delete_image' image.pk 'image_s' %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}">
         {% csrf_token %}
     </form>
     {% endif %}
@@ -286,7 +353,15 @@
     </form>
     {% endif %}
 </div>
-
+{% for plan in plans_list %}
+{% for image in plan.images.all %}
+{% if image.image_plans %}
+<form action="{% url 'delete_image' image.pk 'image_plans' %}" method="post" class="delete-form" id="FormDelete-{{ image.pk }}" style="display: inline;">
+    {% csrf_token %}
+</form>
+{% endif %}
+{% endfor %}
+{% endfor %}
 
 
 <script>
@@ -339,6 +414,7 @@
 }
 
 // Инициализация предварительного просмотра для каждого элемента
+setupImagePreview('id_image_plans', 'imagePreviewContainerImagePlans');
 setupImagePreview('id_image', 'imagePreviewContainerImage');
 setupImagePreview('id_image_s', 'imagePreviewContainerImageS');
 
@@ -389,7 +465,7 @@ clearPlanTabFields();
 
 
 // Обработка кликов по ссылкам с планами
-document.querySelectorAll('.select-plan-link').forEach(function(link) {
+document.querySelectorAll('.edit-plan-btn').forEach(function(link) {
     link.addEventListener('click', function(event) {
         event.preventDefault();
 
@@ -460,8 +536,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
-
-
-
 
 {% endblock %}

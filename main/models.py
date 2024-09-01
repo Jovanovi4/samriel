@@ -19,7 +19,6 @@ class TypeChoise(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
 
-
 class Building(models.Model):
     CATEGORY_CHOISE = [
         ('1', 'Квартира'),
@@ -67,20 +66,19 @@ class Seo(models.Model):
         return self.name or "Без названия"
 
 
-class Image(models.Model):
-    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='images')
-    image_s = models.ImageField(blank=True, upload_to='slyder_images/')
-    image_plans = models.ImageField(blank=True, upload_to='plans_images/')
-
 class Plans(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='plans')
     type_building = models.CharField('Тип жилья', max_length=255, blank=True, null=True) 
     quanty_room = models.IntegerField('Колличество комнат', blank=True, null=True)
-    total_area_from = models.IntegerField('Общая площадь от', blank=True, null=True)
-    total_area_upto = models.IntegerField('Общая площадь до', blank=True, null=True)
+    total_area_from = models.FloatField('Общая площадь от', blank=True, null=True)
+    total_area_upto = models.FloatField('Общая площадь до', blank=True, null=True)
     price_from = models.IntegerField('Цена от', blank=True, null=True)
     price_upto = models.IntegerField('Цена до', blank=True, null=True)
     description = models.TextField('Описание', blank=True, null=True)
-            
-    
-    
+               
+
+class Image(models.Model):
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='images')
+    plans = models.ForeignKey(Plans, on_delete=models.CASCADE, related_name='images', null=True, blank=True)
+    image_s = models.ImageField(blank=True, upload_to='slyder_images/')
+    image_plans = models.ImageField(blank=True, upload_to='plans_images/')

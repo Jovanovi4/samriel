@@ -19,13 +19,26 @@
     <form method="get" class="mb-3">
         <div class="input-group">
             <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Поиск по названию...">
-            
         </div>
     </form>
-
-
-    {% if page_obj %}
     <div class="table-wrapper">
+        <!-- Кнопки для выбора типа недвижимости -->
+<div class="d-flex mb-3 center">
+    <a href="{% url 'index' %}" class="btn {% if selected_type == '' %}btn-primary{% else %}btn-outline-secondary{% endif %} me-2 d-inline-flex align-items-center">
+        Вся недвижимость
+    </a>
+    <a href="?type=1" class="btn {% if selected_type == '1' %}btn-primary{% else %}btn-outline-secondary{% endif %} me-2 d-inline-flex align-items-center">
+        Новостройки
+    </a>
+    <a href="?type=2" class="btn {% if selected_type == '2' %}btn-primary{% else %}btn-outline-secondary{% endif %} me-2 d-inline-flex align-items-center">
+        Вторичка
+    </a>
+</div>
+
+        
+    
+    {% if page_obj %}
+
         <div class="table-container shadow p-4 mb-5 mt-3 bg-white rounded">
             <table class="table table-hover table-fixed-height">
                 <thead class="table-dark">
@@ -74,7 +87,7 @@
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -86,13 +99,13 @@
                     </li>
                     {% elif num > page_obj.number|add:'-10' and num < page_obj.number|add:'10' %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        <a class="page-link" href="?page={{ num }}{% if selected_type %}&type={{ selected_type }}{% endif %}">{{ num }}</a>
                     </li>
                     {% endif %}
                     {% endfor %}
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

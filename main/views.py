@@ -4,7 +4,6 @@ from .forms import BuildingForm, SeoForm, OldBuildingForm, TypeForm, ImageForm, 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -13,24 +12,34 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     sort_by = request.GET.get('sort', '-id')
     query = request.GET.get('q', '')
-    
+    selected_type = request.GET.get('type', '')
+
+    # Фильтрация объектов недвижимости
+    building_list = Building.objects.filter(type_choise__user=request.user)
+
     if query:
-        building_list = Building.objects.filter(
-            type_choise__user=request.user,
-            title__icontains=query  # Фильтрация по полю title, игнорируя регистр
-        ).order_by(sort_by)
-    else:
-        building_list = Building.objects.filter(type_choise__user=request.user).order_by(sort_by)
+        building_list = building_list.filter(title__icontains=query)
     
+    if selected_type:
+        building_list = building_list.filter(type_choise__type_choise=selected_type)  # Фильтрация по типу
+
+    # Сортировка
+    building_list = building_list.order_by(sort_by)
+
     # Пагинация
     paginator = Paginator(building_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    # Получение уникальных типов недвижимости для фильтрации
+    types = TypeChoise.objects.filter(user=request.user).values_list('type_choise', flat=True).distinct()
     
     return render(request, 'main/index.html', {
         'page_obj': page_obj,
         'sort_by': sort_by,
-        'query': query
+        'query': query,
+        'selected_type': selected_type,
+        'types': types,
     })
 
 
@@ -70,13 +79,14 @@ def add(request, pk=None):
 
     return render(request, 'main/add.html', {'form': form, 'types': types})
 
-@login_required
+
 def edit(request, pk=None):
     building = None
     form_class = None
     image_form_class = None
     image_p_form_class = ImagePlansForm
     plans_form_class = PlansForm
+    seo_form_class = SeoForm
     template_name = None
 
     # Определение формы и шаблона на основе типа объекта
@@ -97,17 +107,24 @@ def edit(request, pk=None):
 
     if request.method == 'POST' and form_class:
         # Обработка POST-запроса
-        return handle_post_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class)
+        return handle_post_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, seo_form_class)
     
     # Обработка GET-запроса
-    return handle_get_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, template_name)
+    return handle_get_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, seo_form_class, template_name)
 
 
-def handle_post_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class):
+def handle_post_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, seo_form_class):
     # Основная форма
     form = form_class(request.POST, request.FILES, instance=building)
     image_form = image_form_class(request.POST, request.FILES)
     image_plans_form = image_p_form_class(request.POST, request.FILES)
+
+    # Обработка SEO формы
+    seo_instance = building.seo if hasattr(building, 'seo') else None
+    if not seo_instance:
+        # Создаем новый объект SEO, если его нет
+        seo_instance = Seo(building=building)
+    seo_form = seo_form_class(request.POST, instance=seo_instance) if seo_form_class else None
 
     # Обработка планов
     plan_id = request.POST.get('plan_id')
@@ -142,21 +159,31 @@ def handle_post_request(request, building, form_class, image_form_class, plans_f
         if image_form.is_valid():
             process_images(request.FILES.getlist('image_s'), building, 'image_s')
 
-        # Обработка изображений планов
-        if image_plans_form.is_valid():
-            process_images(request.FILES.getlist('image_plans'), building, 'image_plans')
-
         # Обработка планов, если вкладка планов заполнена
         if plans_filled:
             plans = plans_form.save(commit=False)
             plans.building = building
             plans.save()
 
+            # Обработка изображений, связанных с планами
+            if 'image_plans' in request.FILES:
+                for img in request.FILES.getlist('image_plans'):
+                    Image.objects.create(building=building, image_plans=img, plans=plans)
+
+        # Обработка данных SEO
+        if seo_form and seo_form.is_valid():
+            seo = seo_form.save(commit=False)
+            seo.building = building
+            seo.save()
+
+            return redirect('edit', pk=building.pk)
+
     # Перенаправление или рендеринг страницы
     return redirect('edit', pk=building.pk) if form.is_valid() else render(request, 'main/edit.html', {
         'form': form,
         'image_form': image_form,
         'plans_form': plans_form,
+        'seo_form': seo_form,
         'image_plans_form': image_plans_form,
         'building': building,
         'image_list': Image.objects.filter(building=building),
@@ -164,12 +191,25 @@ def handle_post_request(request, building, form_class, image_form_class, plans_f
     })
 
 
-
-def handle_get_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, template_name):
+def handle_get_request(request, building, form_class, image_form_class, plans_form_class, image_p_form_class, seo_form_class, template_name):
     form = form_class(instance=building) if form_class else None
     image_form = image_form_class() if image_form_class else None
     plans_form = plans_form_class(instance=building.plans.first()) if building and building.plans.exists() else plans_form_class()
     image_plans_form = image_p_form_class() if image_p_form_class else None
+
+    # Обработка формы SEO
+    seo_instance = None
+    if building:
+        try:
+            seo_instance = building.seo
+        except Seo.DoesNotExist:
+            # Если объект SEO не существует, создаем новый
+            seo_instance = Seo(building=building)
+    else:
+        # Если building не существует, создаем новый SEO объект
+        seo_instance = Seo()
+
+    seo_form = seo_form_class(instance=seo_instance) if seo_form_class else None
 
     return render(request, template_name, {
         'form': form,
@@ -177,89 +217,47 @@ def handle_get_request(request, building, form_class, image_form_class, plans_fo
         'plans_form': plans_form,
         'image_plans_form': image_plans_form,
         'building': building,
+        'seo_form': seo_form,
         'image_list': Image.objects.filter(building=building),
-        'plans_list': Plans.objects.filter(building=building), 
+        'plans_list': Plans.objects.filter(building=building),
     })
+
+
 
 def process_images(files, building, field_name):
     for img in files:
         Image.objects.create(building=building, **{field_name: img})
 
+
 # @login_required
-# def edit(request, pk=None):
-#     building = None
-#     form_class = None
-#     image_form_class = None
-#     image_p_form_class = ImagePlansForm
-#     plans_form_class = PlansForm  # Инициализация формы для планов
-#     template_name = None
-
-#     if pk:
-#         building = get_object_or_404(Building, pk=pk)
-#         if building.type_choise.type_choise == '1':
-#             form_class = BuildingForm
-#             image_form_class = ImageForm
-#             template_name = 'main/edit.html'
-#         elif building.type_choise.type_choise == '2':
-#             form_class = OldBuildingForm
-#             image_form_class = ImageForm
-#             template_name = 'main/old_edit.html'
-#         else:
-#             form_class = None
-#             image_form_class = None
-
-#     if request.method == 'POST' and form_class:
-#         form = form_class(request.POST, request.FILES, instance=building)
-#         image_form = image_form_class(request.POST, request.FILES)
-#         plans_form = plans_form_class(request.POST)
-#         image_plans_form = image_p_form_class(request.POST, request.FILES)
-
-#         if form.is_valid() and image_form.is_valid() and plans_form.is_valid() and image_plans_form.is_valid():
-#             building = form.save(commit=False)
-#             building.save()
-
-#             # Обработка изображений для слайдера
-#             images = request.FILES.getlist('image_s')
-#             for img in images:
-#                 Image.objects.create(building=building, image_s=img)
-
-#             images_plan = request.FILES.getlist('image_plans')
-#             for img in images_plan:
-#                 Image.objects.create(building=building, image_plans=img)
-
-
-#             # Обработка планов
-#             plans = plans_form.save(commit=False)
-#             plans.building = building
-#             plans.save()
-
-#             return redirect('edit', pk=building.pk)
-#     else:
-#         form = form_class(instance=building) if form_class else None
-#         image_form = image_form_class() if image_form_class else None
-#         plans_form = plans_form_class(instance=building.plans.first()) if building and building.plans.exists() else plans_form_class()
-#         image_plans_form = image_p_form_class() if image_p_form_class else None
-
-#     # Получение всех изображений для конкретного объекта
-#     image_list = Image.objects.filter(building=building)
-
-#     return render(request, template_name, {
-#         'form': form,
-#         'image_form': image_form,
-#         'building': building,
-#         'image_list': image_list,
-#         'plans_form': plans_form,
-#         'image_plans_form' : image_plans_form
-#     })
+# def delete_image(request, pk):
+#     image = get_object_or_404(Image, pk=pk)
+#     if request.method == 'POST':
+#         image.delete()
+#         return redirect('edit', pk=image.building.pk)
+#     return render(request, 'main/delete_confirm.html', {'image': image})
 
 
 @login_required
-def delete_image(request, pk):
+def delete_image(request, pk, image_type='image_s'):
     image = get_object_or_404(Image, pk=pk)
+
     if request.method == 'POST':
-        image.delete()
+        # Удаляем изображение только в указанном поле
+        if image_type == 'image_s' and image.image_s:
+            image.image_s.delete()
+        elif image_type == 'image_plans' and image.image_plans:
+            image.image_plans.delete()
+
+        # Если оба поля пусты, удаляем сам объект изображения
+        if not image.image_s and not image.image_plans:
+            image.delete()
+
+        # Перенаправление после удаления
         return redirect('edit', pk=image.building.pk)
+
     return render(request, 'main/delete_confirm.html', {'image': image})
+    
 
 
 @login_required
@@ -270,18 +268,6 @@ def delete(request, pk):
         return redirect('index')
     return render(request, 'main/delete_confirm.html', {'building': building})
 
-# @login_required
-# def delete_image_building(request, building_id):
-#     building = get_object_or_404(Building, pk=building_id)
-#     if request.method == 'POST':
-#         if building.image:
-#             building.image.delete(save=False)
-#             building.image = None
-#             building.save()
-#         else:
-#             return redirect('edit', pk=building_id)
-
-#     return redirect('edit', pk=building_id)
 
 def delete_image_building(request, building_id):
     if request.method == 'POST':
@@ -305,14 +291,3 @@ def delete_plans(request, pk):
         plans.delete()
         return redirect('edit', pk=plans.building.pk)
     return render(request, 'main/delete_confirm.html', {'plans': plans})
-
-# @csrf_exempt
-# @login_required
-# def delete_plans(request, pk):
-#     plans = get_object_or_404(Plans, pk=pk)
-#     if request.method == 'POST':
-#         plans.delete()
-#         return redirect('edit', pk=plans.building.pk)
-    
-#     # В случае запроса не POST
-#     return render(request, 'main/delete_confirm.html', {'plans': plans})

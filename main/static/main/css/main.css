@@ -291,8 +291,8 @@ body {
 /* Стили для кнопки удаления */
 .delete-btn-building {
   position: absolute; /* Абсолютное позиционирование кнопки */
-  top: 5px; /* Отступ сверху */
-  right: 20px; /* Отступ справа */
+  top: 1px; /* Отступ сверху */
+  right: 3px; /* Отступ справа */
   border: none;
   background: none;
   font-size: 20px;
@@ -301,7 +301,7 @@ body {
 
 .remove-image-building {
   top: 0px; /* Отступ сверху */
-  right: 60px; /* Отступ справа */
+  right: 10px; /* Отступ справа */
   color: red;
   display: inline-block;
   background-color: none; /* Полупрозрачный фон для лучшего видимости */
@@ -369,4 +369,71 @@ body {
   display: flex;
   align-items: center; /* Вертикальное выравнивание по центру */
   justify-content: space-between; /* Распределение пространства между элементами */
+}
+
+
+.form-container-plans {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 50%; /* Установите желаемую максимальную ширину */
+  margin: 0 auto; /* Центрируйте контейнер на странице */
+  padding: 40px; /* Добавьте отступы внутри контейнера */
+  border: 1px solid #ddd; /* Добавьте рамку вокруг контейнера */
+  border-radius: 8px; /* Добавьте скругленные углы */
+  background-color: #f9f9f9; /* Добавьте фон */
+  margin-left: 0px;
+  margin-top: 50px; /* Добавьте отступ между контейнерами */
+  margin-bottom: 45px; /* Добавьте отступ между контейнерами */
+  flex: 2; /* Форма занимает одну часть пространства */
+}
+
+.form-and-list-container {
+  display: flex; /* Выравнивание элементов в одну строку */
+  gap: 30px; /* Расстояние между элементами */
+  align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+  
+}
+
+
+
+.plans-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 2; /* Форма занимает одну часть пространства */
+}
+
+.form-container-3 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px; /* Добавьте отступы внутри контейнера */
+  border: 1px solid #ddd; /* Добавьте рамку вокруг контейнера */
+  border-radius: 8px; /* Добавьте скругленные углы */
+  background-color: #f9f9f9; /* Добавьте фон */
+  width: 750px;
+  display: flex;
+  margin-bottom: 30px;
+
+}
+.image-container-plans {
+  display: flex;
+  flex-wrap: wrap; /* Позволяет изображению переноситься на новую строку */
+  gap: 10px; /* Расстояние между изображениями */
+  margin-top: 10px; /* Отступ сверху для отделения от других элементов */
+}
+
+.image-wrapper-plans {
+  align-items: center; /* Центрирование изображения внутри обёртки */
+  position: relative;
+  display: inline-block;
+}
+
+.image-wrapper-plans img {
+  display: block; /* Убирает любые дополнительные отступы или пробелы */
+  width: 180px; /* Ширина изображения */
+  height: 102px; /* Высота изображения */
+  object-fit: cover; /* Изображение сохраняет пропорции и заполняет контейнер */
+}
+
+.image-wrapper-plans:hover .remove-image {
+  opacity: 1; /* Показать крестик при наведении */
+  position: relative; /* Установка относительного позиционирования для контейнера */
+  display: inline-block;
 }

@@ -46,7 +46,6 @@ class ImagePlansForm(forms.ModelForm):
         fields = ['image_plans']
 
 
-
 class ImageForm(forms.ModelForm):
     image_s = MultipleFileField(
         label="Изображения для слайдера",
