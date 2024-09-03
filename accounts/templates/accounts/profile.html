@@ -2,14 +2,96 @@
 
 {% block content %}
 <div class="main-content">
-  <div class="form-container mt-3">
-  <h2>Редактировать профиль</h2>
-  
-  <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary w-100 py-3">Сохранить изменения</button>
-  </form>
+  <h1 class="m-0">Редактировать профиль:</h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <p class="m-3">Телефон: {{ user.phone_number }}</p>
 </div>
+
+    <div class="form-container mt-3">
+
+        <form method="post" enctype="multipart/form-data" id="Form_profile">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">Имя</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email }}
+            </div>
+            <label for="image">Фотография пользователя</label>
+            <div class="custom-file-upload">
+              <input type="file" id="id_image" name="image" class="custom-file-input" />
+              <label for="id_image" class="custom-file-label">Выберите файл</label>
+          </div>
+          <div class="image-preview mt-2">
+            <div id="imagePreviewContainerImage" class="image-preview-container">
+            </div>
+        </div>
+        </form>
+
+        {% if user.image %}
+        <div class="image-container mt-4">
+            <div class="image-wrapper">
+                <img src="{{ user.image.url }}" alt="Profile Image" class="img-thumbnail">
+                <form action="{% url 'accounts:delete_image_user' user.pk %}" method="post" class="delete-form" id="FormDelete-{{ user.pk }}">
+                  {% csrf_token %}
+                  <button type="submit" onclick="submitDeleteForm('{{ user.pk }}')" class="delete-btn">
+                      <div class="remove-image">×</div>
+                  </button>
+              </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
 </div>
+
+
+<script>
+function submitDeleteForm(userId) {
+    var form = document.getElementById('FormDelete-' + userId);
+    if (form) {
+        form.submit();
+    }
+}
+
+function setupImagePreview(inputId, previewContainerId) {
+    var inputElement = document.getElementById(inputId);
+    var previewContainer = document.getElementById(previewContainerId);
+
+    if (inputElement && previewContainer) {
+        inputElement.addEventListener('change', function(event) {
+            var files = event.target.files;
+
+            // Очистка контейнера предварительного просмотра
+            previewContainer.innerHTML = '';
+
+            Array.from(files).forEach(file => {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '400px';
+                    img.style.maxHeight = '250px';
+                    img.style.objectFit = 'cover';
+                    img.style.marginRight = '10px';
+
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    }
+}
+
+// Инициализация предварительного просмотра для каждого элемента
+document.addEventListener('DOMContentLoaded', function() {
+    setupImagePreview('id_image', 'imagePreviewContainerImage');
+});
+
+document.getElementById('externalSubmitButton').addEventListener('click', function() {
+        document.getElementById('Form_profile').submit();
+    });
+</script>
 {% endblock %}

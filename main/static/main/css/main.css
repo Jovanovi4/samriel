@@ -18,7 +18,10 @@ body {
     z-index: 100; /* Устанавливает уровень отображения */
     overflow-y: auto; /* Позволяет прокрутку содержимого боковой панели */
     box-shadow: 2px 0 6px #868686; /* Тень для боковой панели */
+
   }
+
+
 
 .custom-sidebar .nav-link {
   color: #f0f0f0; /* Белый цвет текста для ссылок в боковой панели */
@@ -121,6 +124,26 @@ body {
   margin-left: 0px;
   margin-top: 50px; /* Добавьте отступ между контейнерами */
   margin-bottom: 45px; /* Добавьте отступ между контейнерами */
+}
+
+.form-container-theme {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /* Установите желаемую максимальную ширину */
+  width: 40%;
+  padding: 40px; /* Добавьте отступы внутри контейнера */
+  border: 1px solid #ddd; /* Добавьте рамку вокруг контейнера */
+  border-radius: 8px; /* Добавьте скругленные углы */
+  background-color: #f9f9f9; /* Добавьте фон */
+  margin-left: 0px;
+  margin-top: 50px; /* Добавьте отступ между контейнерами */
+  margin-bottom: 45px; /* Добавьте отступ между контейнерами */
+}
+
+
+.form-section-flex {
+  display: flex;
+  gap: 30px; /* Расстояние между элементами */
+  align-items: flex-start; /* Выравнивание по верхнему краю */
 }
 
 .form-container-image {
@@ -325,7 +348,7 @@ body {
 
 /* Стиль для пользовательской кнопки */
 .custom-file-upload {
-  display: inline-block;
+  display: block;
   padding: 6px 12px;
   font-size: 16px;
   font-weight: 400;
@@ -333,7 +356,7 @@ body {
   color: #495057;
   text-align: center;
   white-space: nowrap;
-  vertical-align: middle;
+  margin-top: 15px;
   cursor: pointer;
   border: 1px solid #ced4da;
   border-radius: .25rem;
@@ -394,7 +417,6 @@ body {
 }
 
 
-
 .plans-list-container {
   display: flex;
   flex-wrap: wrap;
@@ -436,4 +458,102 @@ body {
   opacity: 1; /* Показать крестик при наведении */
   position: relative; /* Установка относительного позиционирования для контейнера */
   display: inline-block;
+}
+
+.image-container-sites {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.modal-body {
+  padding: 10px;
+}
+.modal_icon_select {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  margin: 3px;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  transition: border-color 0.3s;
+}
+.modal_icon_select.active {
+  border-color: var(--accent_color, #007bff);
+}
+.modal_icon_select i {
+  font-size: 32px;
+  color: var(--icon-color, #000);
+}
+.color-picker {
+  margin-top: 10px;
+}
+
+.select_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Ширина для отображения увеличенной иконки */
+  height: 50px; /* Высота для отображения увеличенной иконки */
+  margin-left: 10px;
+  background-color: none;
+  font-size: 32px; /* Размер шрифта для увеличенной иконки */
+}
+
+.select_item i {
+  font-size: 32px; /* Размер шрифта для иконки */
+  color: var(--icon-color, #000);
+}
+
+
+.container-box {
+  display: flex;
+  align-items: center;
+}
+
+.color-picker-input {
+  width: 30px;               /* Размер квадрата */
+  height: 30px;              /* Высота квадрата */
+  border: none;              /* Убираем обводку */
+  border-radius: 3px;        /* Закругляем углы */
+  padding: 0;
+  cursor: pointer;           /* Меняем курсор на указатель при наведении */
+  outline: none;             /* Убираем фокусное кольцо */
+  -webkit-appearance: none;  /* Убираем стандартный стиль в WebKit-браузерах */
+  -moz-appearance: none;     /* Убираем стандартный стиль в Mozilla-браузерах */
+  appearance: none;          /* Убираем стандартный стиль во всех браузерах */
+}
+
+/* Поддержка для старых версий браузеров */
+.color-picker-input::-webkit-color-swatch {
+  border: none;              /* Убираем обводку внутри swatch */
+  border-radius: 3px;        /* Закругляем углы внутри swatch */
+}
+
+.color-picker-input::-moz-color-swatch {
+  border: none;              /* Убираем обводку внутри swatch */
+  border-radius: 3px; 
+}
+
+.color-code {
+  margin-left: 10px;         /* Отступ слева от палитры */
+  font-family: 'Courier New', Courier, monospace; /* Моноширинный шрифт для кода цвета */
+  font-size: 18px;           /* Размер текста */
+  color: #050505;               /* Цвет текста */
+}
+
+
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;  
+  gap: 1px;                  /* Отступ между цветами */
+  margin-bottom: 10px;       /* Отступ снизу от палитры */
+}
+
+.color-swatch {
+  width: 25px;               /* Размер квадрата */
+  height: 25px;              /* Высота квадрата */
+  border-radius: 1px;        /* Закругляем углы */
+  cursor: pointer;           /* Меняем курсор на указатель при наведении */
+   /* Обводка цвета */
 }

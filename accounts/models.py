@@ -24,7 +24,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(phone_number, password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    phone_number = models.CharField(max_length=15, unique=True)
+    phone_number = models.CharField(max_length=16, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     email = models.EmailField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='profiles_images/')

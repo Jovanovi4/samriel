@@ -16,6 +16,7 @@
 <link href="{% static 'main/css/main.css' %}" rel="stylesheet">
 
 
+
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
@@ -60,7 +61,11 @@
                 {% else %}
                   <img src="{% static 'path/to/default-profile-image.jpg' %}" alt="Default Profile Image" width="32" height="32" class="rounded-circle me-2">
                 {% endif %}
-                <strong>{{ user.phone_number }}</strong>
+                <strong> {% if user.first_name %}
+                  {{ user.first_name }}
+              {% else %}
+                  {{ user.phone_number }}
+              {% endif %}</strong>
               </a>
               <ul class="dropdown-menu text-small shadow">
                 <li><a class="dropdown-item" href="#">Код Telegram</a></li>

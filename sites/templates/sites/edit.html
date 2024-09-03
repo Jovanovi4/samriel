@@ -10,54 +10,589 @@
 
 {% block content %}
 
-<div class="form-container mt-3">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-section">
-            <h3>Основные данные</h3>
-            <div class="form-group">
-                {{ form.name.label_tag }} {{ form.name }}
-            </div>
-            <div class="form-group">
-                {{ form.title.label_tag }} {{ form.title }}
-            </div>
-            <div class="form-group">
-                {{ form.image.label_tag }} {{ form.image }}
-            </div>
-            <div class="form-group">
-                {{ form.category.label_tag }} {{ form.category }}
-            </div>
-            <div class="form-group">
-                {{ form.prefix.label_tag }} {{ form.prefix }}
-            </div>
-            <div class="form-group">
-                {{ form.price.label_tag }} {{ form.price }}
-            </div>
-        </div>
 
-            <div class="form-section">
-                <h3>Формы с вопросами</h3>
-            <div class="form-group">
-                {{ form.question1.label_tag }} {{ form.question1 }}
+<div class="main-content">
+    <h1>{{ choise.title }}</h1>
+    {% if choise %}
+        <p>{{ choise.get_type_display }}</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" id="Form_site">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
+        <a href="{% url 'landing' page_id=building.pk %}" class="btn btn-secondary mt-3">Предварительный просмотр</a>
+        
+        <ul class="nav nav-tabs" id="propertyTab" role="tablist" style="margin-top: 3%;">
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
+                <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">
+                    <i class="fas fa-info-circle fa-sm"></i> ОСНОВНЫЕ ПАРАМЕТРЫ
+                </a>
+            </li>
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
+                <a class="nav-link" id="contacts-tab" data-bs-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">
+                    <i class="fas fa-image fa-sm"></i> КОНТАКТЫ
+                </a>
+            </li>
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
+                <a class="nav-link" id="sites-tab" data-bs-toggle="tab" href="#sites" role="tab" aria-controls="sites" aria-selected="false">
+                    <i class="fas fa-house fa-sm"></i> ОФОРМЛЕНИЕ САЙТА
+                </a>
+            </li>
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
+                <a class="nav-link" id="catalog-tab" data-bs-toggle="tab" href="#catalog" role="tab" aria-controls="catalog" aria-selected="false">
+                    <i class="fas fa-globe fa-sm"></i> КАТАЛОГ САЙТА
+                </a>
+            </li>
+            <li class="nav-item" role="presentation" style="font-size: 14px;">
+                <a class="nav-link" id="seo-tab" data-bs-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">
+                    <i class="fas fa-search fa-sm"></i> SEO
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="propertyTabContent">
+            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                <div class="form-section">
+                    <h3>Первый экран</h3>
+                
+                <div class="form-container mt-3">
+
+                    {% if building.image %}
+                    <div class="image-container-sites">
+                        <div class="image-wrapper-building">
+                            <img src="{{ building.image.url }}" alt="Image" class="img-thumbnail">
+                            <button type="button" onclick="submitDeleteForm('{{ building.pk }}')" class="delete-btn-building">
+                                <div class="remove-image-building">×</div>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="custom-file-upload">
+                        <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.html_name }}" class="custom-file-input" />
+                        <label for="{{ form.image.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                    </div>
+                    <div class="image-preview mt-2">
+                        <div id="imagePreviewContainerImage" class="image-preview-container"></div>
+                    </div>
+                    <div class="form-group form-inline mt-4">
+                        <div class="inline-field">
+                        {{ form.name.label_tag }} {{ form.name }}
+                        </div>
+                    
+                    <div class="inline-field">
+                        {{ form.category.label_tag }} {{ form.category }}
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.title.label_tag }} {{ form.title }}
+                    </div>
+                    <div class="form-group form-inline">
+                        <div class="inline-field">
+                        {{ form.prefix.label_tag }} {{ form.prefix }}
+                    </div>
+                    <div class="inline-field">
+                        {{ form.price.label_tag }} {{ form.price }}
+                    </div>
+                </div>
+                </div>
+                <h3>Фильтры на сайте</h3>
+                <div class="form-container mt-2">
+                    <div class="form-group">
+                        {{ form.question1.label_tag }} {{ form.question1 }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.variants1.label_tag }} {{ form.variants1 }}
+                    </div>
+                </div>
+                <div class="form-container mt-2">
+                    <div class="form-group">
+                        {{ form.question2.label_tag }} {{ form.question2 }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.variants2.label_tag }} {{ form.variants2 }}
+                    </div>
+                </div>
+                <div class="form-container mt-2">
+                    <div class="form-group">
+                        {{ form.question3.label_tag }} {{ form.question3 }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.variants3.label_tag }} {{ form.variants3 }}
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                {{ form.variants1.label_tag }} {{ form.variants1 }}
-            </div>
-            <div class="form-group">
-                {{ form.question2.label_tag }} {{ form.question2 }}
-            </div>
-            <div class="form-group">
-                {{ form.variants2.label_tag }} {{ form.variants2 }}
-            </div>
-            <div class="form-group">
-                {{ form.question3.label_tag }} {{ form.question3 }}
-            </div>
-            <div class="form-group">
-                {{ form.variants3.label_tag }} {{ form.variants3 }}
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
         </div>
-    </form>
+            
+            <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+                <div class="form-section">
+                    <h3>Контактная информация</h3>
+                
+                <div class="form-container mt-3">
+
+                    <h6>Изображение в виджете</h6>
+                    {% if contact.image_contacts %}
+                    <div class="image-container-building mt-2">
+                        <div class="image-wrapper-building">
+                            <img src="{{ contact.image_contacts.url }}" alt="Image" class="img-thumbnail">
+                            <button type="button" onclick="submitDeleteForm('{{ contact.pk }}')" class="delete-btn-building">
+                                <div class="remove-image-building">×</div>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="custom-file-upload">
+                        <input type="file" id="{{ contact_form.image_contacts.id_for_label }}" name="{{ contact_form.image_contacts.html_name }}" class="custom-file-input" />
+                        <label for="{{ contact_form.image_contacts.id_for_label }}" class="custom-file-label">Выберите файл</label>
+                    </div>
+                    <div class="image-preview mt-2">
+                        <div id="imagePreviewContainerImageS" class="image-preview-container">
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        {{ contact_form.tg_link.label_tag }} {{ contact_form.tg_link }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.whatsapp.label_tag }} {{ contact_form.whatsapp }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.description.label_tag }} {{ contact_form.description }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.number.label_tag }} {{ contact_form.number }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.vk_link.label_tag }} {{ contact_form.vk_link }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.instagram_link.label_tag }} {{ contact_form.instagram_link }}
+                    </div>
+                    <div class="form-group">
+                        {{ contact_form.youtube_link.label_tag }} {{ contact_form.youtube_link }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="sites" role="tabpanel" aria-labelledby="sites-tab">
+            <h3>Оформление сайта</h3>
+            <div class="form-section-flex">
+                <!-- Форма -->
+                <div class="form-container-theme mt-3">
+                    <div class="form-group">
+                        {{ site_form.as_p }}
+                    </div>
+                </div>
+        
+                <!-- Кнопка для открытия модального окна -->
+                <div class="form-container-theme mt-3">
+                    
+                    <!-- Скрытые элементы для хранения данных -->
+                    <div class="container-box">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#iconModal">Выбрать иконку</button>
+                        <input type="hidden" id="icon" name="icon">
+                        <div class="select_item" id="selected-icon"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <a>Выбрать цвет:</a>
+                    <!-- Панель выбора цвета -->
+                    <div class="color-picker mt-3">
+                        <div class="color-swatches">
+                            <div class="color-swatch" data-color="#e6b0aa" style="background-color: #e6b0aa;"></div>
+                            <div class="color-swatch" data-color="#d98880" style="background-color: #d98880;"></div>
+                            <div class="color-swatch" data-color="#cd6155" style="background-color: #cd6155;"></div>
+                            <div class="color-swatch" data-color="#c0392b" style="background-color: #c0392b;"></div>
+                            <div class="color-swatch" data-color="#a93226" style="background-color: #a93226;"></div>
+                            <div class="color-swatch" data-color="#f5b7b1" style="background-color: #f5b7b1;"></div>
+                            <div class="color-swatch" data-color="#f1948a" style="background-color: #f1948a;"></div>
+                            <div class="color-swatch" data-color="#ec7063" style="background-color: #ec7063;"></div>
+                            <div class="color-swatch" data-color="#e74c3c" style="background-color: #e74c3c;"></div>
+                            <div class="color-swatch" data-color="#cb4335" style="background-color: #cb4335;"></div>
+                            <div class="color-swatch" data-color="#d7bde2" style="background-color: #d7bde2;"></div>
+                            <div class="color-swatch" data-color="#c39bd3" style="background-color: #c39bd3;"></div>
+                            <div class="color-swatch" data-color="#af7ac5" style="background-color: #af7ac5;"></div>
+                            <div class="color-swatch" data-color="#9b59b6" style="background-color: #9b59b6;"></div>
+                            <div class="color-swatch" data-color="#884ea0" style="background-color: #884ea0;"></div>
+                            <div class="color-swatch" data-color="#d2b4de" style="background-color: #d2b4de;"></div>
+                            <div class="color-swatch" data-color="#bb8fce" style="background-color: #bb8fce;"></div>
+                            <div class="color-swatch" data-color="#a569bd" style="background-color: #a569bd;"></div>
+                            <div class="color-swatch" data-color="#8e44ad" style="background-color: #8e44ad;"></div>
+                            <div class="color-swatch" data-color="#7d3c98" style="background-color: #7d3c98;"></div>
+                            <div class="color-swatch" data-color="#a2d9ce" style="background-color: #a2d9ce;"></div>
+                            <div class="color-swatch" data-color="#73c6b6" style="background-color: #73c6b6;"></div>
+                            <div class="color-swatch" data-color="#45b39d" style="background-color: #45b39d;"></div>
+                            <div class="color-swatch" data-color="#16a085" style="background-color: #16a085;"></div>
+                            <div class="color-swatch" data-color="#138d75" style="background-color: #138d75;"></div>
+                            <div class="color-swatch" data-color="#a9dfbf" style="background-color: #a9dfbf;"></div>
+                            <div class="color-swatch" data-color="#7dcea0" style="background-color: #7dcea0;"></div>
+                            <div class="color-swatch" data-color="#52be80" style="background-color: #52be80;"></div>
+                            <div class="color-swatch" data-color="#27ae60" style="background-color: #27ae60;"></div>
+                            <div class="color-swatch" data-color="#229954" style="background-color: #229954;"></div>
+                            <div class="color-swatch" data-color="#f9e79f" style="background-color: #f9e79f;"></div>
+                            <div class="color-swatch" data-color="#f7dc6f" style="background-color: #f7dc6f;"></div>
+                            <div class="color-swatch" data-color="#f4d03f" style="background-color: #f4d03f;"></div>
+                            <div class="color-swatch" data-color="#f1c40f" style="background-color: #f1c40f;"></div>
+                            <div class="color-swatch" data-color="#d4ac0d" style="background-color: #d4ac0d;"></div>
+                            <div class="color-swatch" data-color="#fad7a0" style="background-color: #fad7a0;"></div>
+                            <div class="color-swatch" data-color="#f8c471" style="background-color: #f8c471;"></div>
+                            <div class="color-swatch" data-color="#f5b041" style="background-color: #f5b041;"></div>
+                            <div class="color-swatch" data-color="#f39c12" style="background-color: #f39c12;"></div>
+                            <div class="color-swatch" data-color="#d68910" style="background-color: #d68910;"></div>
+                            <div class="color-swatch" data-color="#f5cba7" style="background-color: #f5cba7;"></div>
+                            <div class="color-swatch" data-color="#f0b27a" style="background-color: #f0b27a;"></div>
+                            <div class="color-swatch" data-color="#eb984e" style="background-color: #eb984e;"></div>
+                            <div class="color-swatch" data-color="#e67e22" style="background-color: #e67e22;"></div>
+                            <div class="color-swatch" data-color="#ca6f1e" style="background-color: #ca6f1e;"></div>
+                            <div class="color-swatch" data-color="#d5a6bd" style="background-color: #d5a6bd;"></div>
+                            <div class="color-swatch" data-color="#c4e17f" style="background-color: #c4e17f;"></div>
+                            <div class="color-swatch" data-color="#a2b9bc" style="background-color: #a2b9bc;"></div>
+                            
+                            <!-- Добавьте больше цветов по желанию -->
+                        </div>
+                        <input type="color" id="color" name="color" value="#007bff" class="color-picker-input">
+                        <span id="color-code" class="color-code">#007bff</span> <!-- Элемент для отображения кода цвета -->
+                    </div>
+                </div>
+                
+            </div>
+        
+            <!-- Модальное окно выбора иконок -->
+            <div class="modal fade" id="iconModal" tabindex="-1" aria-labelledby="iconModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="iconModalLabel">Выбор главного логотипа для сайта</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Иконки Bootstrap -->
+                            <div class="modal_icon_select" title="bi bi-building">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-briefcase">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-calendar">
+                                <i class="bi bi-calendar"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-cash">
+                                <i class="bi bi-cash"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-house-door">
+                                <i class="bi bi-house-door"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-key">
+                                <i class="bi bi-key"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-map">
+                                <i class="bi bi-map"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-person-check">
+                                <i class="bi bi-person-check"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-person-lines-fill">
+                                <i class="bi bi-person-lines-fill"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-person-circle">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-pie-chart">
+                                <i class="bi bi-pie-chart"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-stack">
+                                <i class="bi bi-stack"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-tools">
+                                <i class="bi bi-tools"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-wallet">
+                                <i class="bi bi-wallet"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-archive">
+                                <i class="bi bi-archive"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-bank">
+                                <i class="bi bi-bank"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-bag">
+                                <i class="bi bi-bag"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-bar-chart">
+                                <i class="bi bi-bar-chart"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-box">
+                                <i class="bi bi-box"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-currency-dollar">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-gear">
+                                <i class="bi bi-gear"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-globe">
+                                <i class="bi bi-globe"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-table">
+                                <i class="bi bi-table"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-house">
+                                <i class="bi bi-house"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-envelope">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-person">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-bell">
+                                <i class="bi bi-bell"></i>
+                            </div>    
+                            <div class="modal_icon_select" title="bi bi-key">
+                                <i class="bi bi-key"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-key-fill">
+                                <i class="bi bi-key-fill"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-lock">
+                                <i class="bi bi-lock"></i>
+                            </div>
+                            <div class="modal_icon_select" title="bi bi-lock-fill">
+                                <i class="bi bi-lock-fill"></i>
+                            </div>
+
+                                                                                
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+    </div>
+    <!-- Кнопка сохранения -->
+    <button type="submit" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
 </div>
+
+
+{% if contact.image_contacts %}
+<form action="{% url 'delete_image_contacts' contact.pk %}" method="post" class="delete-form" id="FormDelete-{{ contact.pk }}">
+    {% csrf_token %}
+</form>
+{% endif %}
+
+{% if building.image %}
+    <!-- Форма для удаления изображения -->
+    <form action="{% url 'delete_image_general' building.pk %}" method="post" class="delete-form" id="FormDelete-{{ building.pk }}">
+        {% csrf_token %}
+    </form>
+
+{% endif %}
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function submitDeleteForm(contactId) {
+    var form = document.getElementById('FormDelete-' + contactId);
+    if (form) {
+        form.submit();
+    }
+}
+
+function submitDeleteForm(firstscreenID) {
+    var form = document.getElementById('FormDelete-' + firstscreenID);
+    if (form) {
+        form.submit();
+    }
+}
+
+function setupImagePreview(inputId, previewContainerId) {
+    document.getElementById(inputId).addEventListener('change', function(event) {
+        var files = event.target.files;
+        var previewContainer = document.getElementById(previewContainerId);
+
+        // Очистка контейнера предварительного просмотра
+        previewContainer.innerHTML = '';
+
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var container = document.createElement('div');
+                container.style.position = 'relative';
+                container.style.display = 'inline-block';
+
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '400px';
+                img.style.maxHeight = '250px';
+                img.style.objectFit = 'cover';
+                img.style.marginRight = '10px';
+
+                var closeButton = document.createElement('button');
+                closeButton.textContent = '×'; // Или иконка крестика
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '1px';
+                closeButton.style.right = '20px';
+                closeButton.style.border = 'none';
+                closeButton.style.background = 'none';
+                closeButton.style.color = 'red';
+                closeButton.style.fontSize = '20px';
+                closeButton.style.cursor = 'pointer';
+
+                closeButton.addEventListener('click', function() {
+                    // Очистка предварительного просмотра и сброс поля загрузки
+                    previewContainer.innerHTML = '';
+                    document.getElementById(inputId).value = ''; // Сброс поля загрузки
+                });
+
+                container.appendChild(img);
+                container.appendChild(closeButton);
+                previewContainer.appendChild(container);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+}
+
+
+setupImagePreview('id_image_contacts', 'imagePreviewContainerImageS');
+setupImagePreview('id_image', 'imagePreviewContainerImage');
+
+document.getElementById('externalSubmitButton').addEventListener('click', function() {
+        document.getElementById('Form_site').submit();
+    });
+
+
+
+// Код для сохранения activeTab при клике на вкладку
+document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+        var target = link.getAttribute('href');
+        localStorage.setItem('activeTab', target);
+        console.log('Tab clicked, activeTab saved to localStorage:', target);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Восстановление состояния вкладок
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        // Удаление классов активных вкладок
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+            link.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-pane').forEach(function(pane) {
+            pane.classList.remove('show', 'active');
+        });
+
+        // Установка активного состояния
+        var activeLink = document.querySelector(`a[href="${activeTab}"]`);
+        var activePane = document.querySelector(activeTab);
+        
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+        if (activePane) {
+            activePane.classList.add('show', 'active');
+        }
+    }
+
+    // Обработка кликов по вкладкам
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            var target = link.getAttribute('href');
+            localStorage.setItem('activeTab', target);
+        });
+    });
+});
+
+$(document).ready(function() {
+    // Функция для обработки клика на иконке
+    $(".modal_icon_select").click(function() {
+        $(".modal_icon_select").removeClass("active");
+        $(this).addClass("active");
+        let selectedIconClass = $(this).attr("title");
+        $("#icon").val(selectedIconClass);
+        updateSelectedIcon(selectedIconClass);
+    });
+
+    // Функция для обновления цвета и иконки
+    function updateIconColor() {
+        let selectedColor = $("#color").val();
+        $(".modal_icon_select i").css("color", selectedColor);
+        $("#selected-icon i").css("color", selectedColor); // Обновление цвета выбранной иконки
+        $("#color-code").text(selectedColor); // Обновляем текст с кодом цвета
+    }
+
+    // Обработчик изменения цвета
+    $("#color").change(function() {
+        updateIconColor();
+    });
+
+    // Инициализация цвета и иконок и кода цвета при загрузке страницы
+    updateIconColor();
+
+    // Устанавливаем иконку по умолчанию при загрузке страницы
+    selectDefaultIcon('bi bi-house');
+
+    // Функция для установки иконки по умолчанию
+    function selectDefaultIcon(iconClass) {
+        let selectedColor = $("#color").val();
+        setIcon(iconClass, selectedColor);
+    }
+
+    // Обработчик кликов по иконкам в модальном окне
+    document.querySelectorAll('.modal_icon_select').forEach(function(element) {
+        element.addEventListener('click', function() {
+            selectDefaultIcon(this.getAttribute('title')); // Выбираем иконку при клике
+        });
+    });
+
+    // Инициализация иконки и цвета при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        var defaultIconClass = 'bi-house'; // Иконка по умолчанию
+        var defaultColor = document.getElementById('color').value;
+        setIcon(defaultIconClass, defaultColor);
+    });
+
+    function setIcon(iconClass, color) {
+        var iconHTML = '<i class="' + iconClass + '" style="color: ' + color + ';"></i>';
+        document.getElementById('selected-icon').innerHTML = iconHTML;
+        document.getElementById('icon').value = iconClass;
+    }
+
+    function updateSelectedIcon(iconClass) {
+        let selectedColor = $("#color").val();
+        setIcon(iconClass, selectedColor);
+    }
+
+    // Обработчик изменения цвета и обновления иконки
+    document.getElementById('color').addEventListener('input', function() {
+        var selectedColor = this.value;
+        var iconClass = document.getElementById('icon').value;
+        setIcon(iconClass, selectedColor);
+    });
+
+    // Обработчик кликов по палитре цветов
+    $(".color-swatch").click(function() {
+        let selectedColor = $(this).data("color");
+        $("#color").val(selectedColor);
+        $("#color-code").text(selectedColor);
+        updateIconColor(); // Обновляем цвет иконок
+        $(this).addClass('selected').siblings().removeClass('selected'); // Обновляем выделение в палитре
+    });
+});
+
+
+
+
+
+</script>
+
 {% endblock %}
 

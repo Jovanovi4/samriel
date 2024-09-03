@@ -30,9 +30,10 @@ class FirstScreen(models.Model):
         ('2', 'от'),
         ('3', 'до'),
     ]
+    DEFAULT_IMAGE = 'images/default_image.jpg'
 
     choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, null=True, upload_to='images/')
+    image = models.ImageField(blank=True, null=True, upload_to='images/', default=DEFAULT_IMAGE)
     name = models.CharField('Имя сайта', max_length=255, blank=True, default='Город в Самаре')
     title = models.CharField('Заголовок сайта', max_length=255, blank=True, default='Купить квартиру в новостройках Самары') 
     category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOICES, default='apartment', blank=True)
@@ -52,19 +53,41 @@ class FirstScreen(models.Model):
 
 
 class Contact(models.Model):
-    image = models.ImageField(blank=True, null=True, upload_to='images/')
-    tg_link = models.CharField('Ссылка Telegram', max_length=255, blank=True) 
-    whatsapp = models.CharField('WhatsApp', max_length=255, blank=True) 
-    description = models.TextField('', blank=True, null=True)
-    number = models.CharField('Номеp', max_length=255, blank=True) 
-    vk_link = models.TextField('', blank=True, null=True)
-    instagram_link = models.TextField('', blank=True, null=True)
-    youtube_link = models.TextField('', blank=True, null=True)
+    DEFAULT_IMAGE = 'profile_images_contact/default_image.jpg'
 
+
+    choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
+    image_contacts = models.ImageField(blank=True, null=True, upload_to='profile_images_contact/', default=DEFAULT_IMAGE)
+    tg_link = models.CharField('Ссылка Telegram', max_length=255, blank=True, default='t.me/') 
+    whatsapp = models.CharField('WhatsApp', max_length=255, blank=True, default='+79229988776') 
+    description = models.TextField('', blank=True, null=True, default='Здравствуйте. Интересует покупка квартиры!')
+    number = models.CharField('Номеp', max_length=255, blank=True, default='+79229988776') 
+    vk_link = models.CharField('Ссылка на VK', max_length=255, blank=True, null=True)
+    instagram_link = models.CharField('Ссылка на YouTube Канал', max_length=255, blank=True, null=True)
+    youtube_link = models.CharField('Ссылка на Instagram', max_length=255, blank=True, null=True)
+
+
+
+class Logo(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    image_icons = models.ImageField(upload_to='logos/')
+
+    def __str__(self):
+        return self.name or "Logo {}".format(self.id)
 
 class Sites(models.Model):
-    name = models.CharField('Название компании', max_length=255)
-    number = models.CharField('Номеp', max_length=255, blank=True) 
-    decoding = models.CharField('Расшифровка', max_length=255, blank=True)
-    text_under_number = models.CharField('Подпись под номером', max_length=255, blank=True)
-    link = models.CharField('Ccskrf', max_length=255, blank=True)
+    choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
+    name = models.CharField('Название компании', max_length=255, default='Без названия')
+    number = models.CharField('Номеp', max_length=255, blank=True, default='+79229988776') 
+    decoding = models.CharField('Расшифровка', max_length=255, blank=True, default='агентство недвижимости')
+    text_under_number = models.CharField('Подпись под номером', max_length=255, blank=True, default='с 9.00 до 20.00')
+    link = models.CharField('Ссылка', max_length=255, blank=True)
+    logo = models.ForeignKey(Logo, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+
+class Image(models.Model):
+    DEFAULT_IMAGE = 'profile_images_contact/free-icon-user-219983.png'
+    sites = models.ForeignKey(Sites, on_delete=models.CASCADE, related_name='image_icons')
+    image_icons = models.ImageField(blank=True, null=True, upload_to='icon_images/', default=DEFAULT_IMAGE)
+

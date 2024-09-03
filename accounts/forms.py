@@ -1,8 +1,18 @@
 from django import forms
 from .models import CustomUser
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
 class CustomUserCreationForm(forms.ModelForm):
+    first_name = forms.CharField(
+        label="Имя",
+        max_length=30,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите ваше имя'
+        }),
+    )
+
     password1 = forms.CharField(
         label="Пароль",
         widget=forms.PasswordInput(attrs={
@@ -35,22 +45,49 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
         return user
     
+
 class CustomAuthenticationForm(AuthenticationForm):
-        username = forms.CharField(
-            label="Телефон",
-            widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Введите номер телефона'
-            }),
-        )
-        password = forms.CharField(
-            label="Пароль",
-            widget=forms.PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Введите пароль'
-            }),
-        )
-        fields = ['username', 'password']
+    username = forms.CharField(
+        label="Телефон",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите номер телефона'
+        }),
+    )
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите пароль'
+        }),
+    )
+
+    def confirm_login_allowed(self, user):
+        # Проверка разрешений входа для пользователя
+        if not user.is_active:
+            raise forms.ValidationError(
+                'Этот аккаунт не активен.',
+                code='inactive',
+            )
+
+    def clean(self):
+        # Переопределение метода clean для проверки аутентификации
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        # Аутентификация пользователя по номеру телефона
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise forms.ValidationError(
+                    'Неверное имя пользователя или пароль.',
+                    code='invalid_login',
+                )
+            self.confirm_login_allowed(user)
+            cleaned_data['user'] = user
+        return cleaned_data
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
