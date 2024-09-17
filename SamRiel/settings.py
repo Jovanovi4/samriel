@@ -130,3 +130,4 @@ LOGIN_REDIRECT_URL = 'profile'
 
 LOGIN_REDIRECT_URL = 'home'  # URL после успешного входа
 LOGOUT_REDIRECT_URL = 'home'  # URL после выхода
+

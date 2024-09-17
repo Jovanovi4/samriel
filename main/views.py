@@ -8,14 +8,13 @@ from django.http import JsonResponse
 
 
 
-@login_required
-def index(request):
+def get_paginated_buildings(request, user):
     sort_by = request.GET.get('sort', '-id')
     query = request.GET.get('q', '')
     selected_type = request.GET.get('type', '')
 
     # Фильтрация объектов недвижимости
-    building_list = Building.objects.filter(type_choise__user=request.user)
+    building_list = Building.objects.filter(type_choise__user=user)
 
     if query:
         building_list = building_list.filter(title__icontains=query)
@@ -32,7 +31,13 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     # Получение уникальных типов недвижимости для фильтрации
-    types = TypeChoise.objects.filter(user=request.user).values_list('type_choise', flat=True).distinct()
+    types = TypeChoise.objects.filter(user=user).values_list('type_choise', flat=True).distinct()
+
+    return page_obj, sort_by, query, selected_type, types
+
+@login_required
+def index(request):
+    page_obj, sort_by, query, selected_type, types = get_paginated_buildings(request, request.user)
     
     return render(request, 'main/index.html', {
         'page_obj': page_obj,

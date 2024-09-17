@@ -50,6 +50,7 @@ class Building(models.Model):
     floor = models.IntegerField('Этаж', blank=True, null=True) 
     all_floor = models.IntegerField('Всего этажей', blank=True, null=True)
     price = models.IntegerField('Цена объекта', blank=True, null=True)
+    
 
     def __str__(self):
         return self.title

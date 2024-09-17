@@ -387,6 +387,10 @@ body {
   border-top: 1px solid #ddd;
   margin: 30px 0;
 }
+.divider-min {
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+}
 
 .form-header {
   display: flex;
@@ -548,6 +552,7 @@ body {
   flex-wrap: wrap;  
   gap: 1px;                  /* Отступ между цветами */
   margin-bottom: 10px;       /* Отступ снизу от палитры */
+  overflow: visible;         /* Обеспечиваем, чтобы элементы не обрезались */
 }
 
 .color-swatch {
@@ -555,5 +560,82 @@ body {
   height: 25px;              /* Высота квадрата */
   border-radius: 1px;        /* Закругляем углы */
   cursor: pointer;           /* Меняем курсор на указатель при наведении */
-   /* Обводка цвета */
+  transition: transform 0.2s ease; /* Плавный переход при изменении размера */
 }
+
+.color-swatch:hover {
+  transform: scale(1.2); /* Увеличение размера при наведении */
+  cursor: pointer;       /* Изменение курсора на указатель */
+  z-index: 10;           /* Поднимаем элемент над другими */
+}
+
+
+/* Контейнер для сайта */
+.container-site-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Контейнер для списка сайтов */
+.container-site-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Карточка для каждого сайта */
+.site-card {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.site-card h4 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.site-card p {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Добавляем отступ перед текстом кнопки */
+.action-buttons .btn i {
+  margin-right: 5px;
+}
+
+.edit-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+/* Общий стиль для кнопок действия */
+.action-btn {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Меняем цвет кнопки на primary при наведении */
+.action-btn:hover {
+  background-color: #0d6efd; /* Цвет btn-primary */
+  color: white;
+  border-color: #0d6efd; /* Чтобы изменить цвет бордюра на primary */
+}
+
+.action-btn:hover i {
+  color: white; /* Меняем цвет иконки на белый при наведении */
+}
+

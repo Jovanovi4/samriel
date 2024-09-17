@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings 
+from main.models import Building
 
 
 class Choise(models.Model):
@@ -18,6 +19,8 @@ class Choise(models.Model):
     title = models.CharField('Наименование объекта', max_length=255) 
     type = models.CharField('Тип недвижимости', max_length=100, choices=TYPE_CHOICES, default='1')
     category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOICES, default='house', blank=True)
+    # Связываем с моделью Building из приложения 'real_estate'
+    selected_buildings = models.ManyToManyField(Building, blank=True, related_name='choises')
 
 
 class FirstScreen(models.Model):
@@ -34,7 +37,7 @@ class FirstScreen(models.Model):
 
     choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to='images/', default=DEFAULT_IMAGE)
-    name = models.CharField('Имя сайта', max_length=255, blank=True, default='Город в Самаре')
+    name_company = models.CharField('Имя сайта', max_length=255, blank=True, default='Город в Самаре')
     title = models.CharField('Заголовок сайта', max_length=255, blank=True, default='Купить квартиру в новостройках Самары') 
     category = models.CharField('Категория недвижимости', max_length=100, choices=CATEGORY_CHOICES, default='apartment', blank=True)
     prefix = models.CharField('Префикс цены', max_length=100, choices=PREFIX_CHOICES, default='2', blank=True)
@@ -53,7 +56,7 @@ class FirstScreen(models.Model):
 
 
 class Contact(models.Model):
-    DEFAULT_IMAGE = 'profile_images_contact/default_image.jpg'
+    DEFAULT_IMAGE = 'profile_images_contact/free-icon-user-219983.png'
 
 
     choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
@@ -77,12 +80,14 @@ class Logo(models.Model):
 
 class Sites(models.Model):
     choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
-    name = models.CharField('Название компании', max_length=255, default='Без названия')
+    name_sites = models.CharField('Название компании', max_length=255, default='Без названия')
     number = models.CharField('Номеp', max_length=255, blank=True, default='+79229988776') 
     decoding = models.CharField('Расшифровка', max_length=255, blank=True, default='агентство недвижимости')
     text_under_number = models.CharField('Подпись под номером', max_length=255, blank=True, default='с 9.00 до 20.00')
     link = models.CharField('Ссылка', max_length=255, blank=True)
     logo = models.ForeignKey(Logo, on_delete=models.SET_NULL, null=True, blank=True)
+    icon = models.CharField('Иконка', max_length=100, blank=True, null=True)
+    color = models.CharField(max_length=7, blank=True, null=True, default='#007bff')
 
 
 
@@ -91,3 +96,13 @@ class Image(models.Model):
     sites = models.ForeignKey(Sites, on_delete=models.CASCADE, related_name='image_icons')
     image_icons = models.ImageField(blank=True, null=True, upload_to='icon_images/', default=DEFAULT_IMAGE)
 
+
+class SeoSites(models.Model):
+    choise = models.OneToOneField(Choise, on_delete=models.CASCADE)
+    name_seo = models.CharField('Назване страницы', max_length=255, blank=True, null=True)
+    url_link_seo = models.CharField('URL', max_length=255, blank=True, null=True)
+    deskription_seo = models.TextField('Описание', blank=True, null=True)
+    key_word_seo = models.TextField('Ключевые слова', blank=True, null=True)
+
+    def __str__(self):
+        return self.name or "Без названия"

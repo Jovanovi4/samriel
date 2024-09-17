@@ -1,0 +1,660 @@
+
+<!doctype html>
+<html class="h-100" lang="ru" data-bs-theme="light">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{ landing_page.title }}</title>
+		<link rel="icon" href="favicon.ico">
+						
+		<style>
+		* {
+			--accent_color: #3498db;
+		}
+		@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCs16Ew-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtZ6Ew-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu170w-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCuM70w-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmSU5vAw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Me5Q.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmEU9vAw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmWUlvAw.ttf) format('truetype');
+}
+
+				</style>		
+		<link rel="stylesheet" href="//static.realtor.promo/the_first_exp/assets/bootstrap/css/bootstrap.min.css?ver=1725648809" />
+		<link rel="stylesheet" href="//static.realtor.promo/the_first_exp/css/jquery.phonemaskedinput.css?ver=1725648809" />
+		<link rel="stylesheet" href="//static.realtor.promo/the_first_exp/css/main.css?ver=1725648809" />
+		<link rel="stylesheet" href="//static.realtor.promo/the_first_exp/css/glide.css?ver=1725648809" />
+		<link rel="stylesheet" href="//static.realtor.promo/the_first_exp/css/fancybox.css?ver=1725648809" />
+			</head>
+	<body class="h-100">
+						
+		
+		
+			
+				<header class="fixed-top">
+			<div class="container-md d-flex justify-content-center justify-content-sm-start">
+				<div class="logo">
+					<a href="/">
+					<svg viewBox="5424 4971 52 59.49755859375" style="fill: var(--accent_color)">
+	<path fill-opacity="1" stroke="" stroke-opacity="1" stroke-width="1" fill-rule="evenodd" id="tSvg2b87a5c7b0" d="M 5445.936078431373 4973.568127152303 C 5448.263039215686 4971.479453340943 5451.67 4971.476996077635 5453.999705882353 4973.562131429832 C 5472.778333333334 4990.368829547686 5472.778333333334 4990.368829547686 5472.778333333334 4990.368829547686 C 5474.186960784314 4991.629503914956 5475 4993.4858189079605 5475 4995.441702210184 C 5475 5024.337054604994 5475 5024.337054604994 5475 5024.337054604994 C 5475 5027.187185170075 5472.82362745098 5029.497602422302 5470.138921568628 5029.497602422302 C 5429.861078431372 5029.497602422302 5429.861078431372 5029.497602422302 5429.861078431372 5029.497602422302 C 5427.17637254902 5029.497602422302 5425 5027.187185170075 5425 5024.337054604994 C 5425 4995.437967169956 5425 4995.437967169956 5425 4995.437967169956 C 5425 4993.485229164767 5425.8101960784315 4991.631764597199 5427.214803921569 4990.370991939396 C 5445.936078431373 4973.568127152303 5445.936078431373 4973.568127152303 5445.936078431373 4973.568127152303 M 5451.314215686275 4976.944013774653 C 5450.537549019608 4976.249001420766 5449.401960784314 4976.249886035556 5448.626078431373 4976.946077875832 C 5429.904901960784 4993.748942662925 5429.904901960784 4993.748942662925 5429.904901960784 4993.748942662925 C 5429.4367647058825 4994.169232979038 5429.166666666667 4994.787087265071 5429.166666666667 4995.437967169956 C 5429.166666666667 5024.337054604994 5429.166666666667 5024.337054604994 5429.166666666667 5024.337054604994 C 5429.166666666667 5024.743977408712 5429.477549019608 5025.074233597238 5429.861078431372 5025.074233597238 C 5470.138921568628 5025.074233597238 5470.138921568628 5025.074233597238 5470.138921568628 5025.074233597238 C 5470.522549019608 5025.074233597238 5470.833333333333 5024.743977408712 5470.833333333333 5024.337054604994 C 5470.833333333333 4995.441702210184 5470.833333333333 4995.441702210184 5470.833333333333 4995.441702210184 C 5470.833333333333 4994.789741109443 5470.562254901961 4994.171002208619 5470.092745098039 4993.750711892507 C 5451.314215686275 4976.944013774653 5451.314215686275 4976.944013774653 5451.314215686275 4976.944013774653"></path>
+	<path fill-opacity="1" stroke="" stroke-opacity="1" stroke-width="1" fill-rule="evenodd" id="tSvg9821f8167d" d="M 5461.2205 4998.1442 C 5462.0504 4999.023 5462.0504 5000.4475 5461.2205 5001.3263 C 5448.4609 5014.8377 5448.4609 5014.8377 5448.4609 5014.8377 C 5448.0625 5015.2596 5447.5219 5015.4966 5446.9583 5015.4966 C 5446.3948 5015.4966 5445.8542 5015.2596 5445.4558 5014.8377 C 5439.7891 5008.8373 5439.7891 5008.8373 5439.7891 5008.8373 C 5438.9592 5007.9585 5438.9592 5006.5337 5439.7891 5005.655 C 5440.6189 5004.7762 5441.9644 5004.7762 5442.7943 5005.655 C 5446.9583 5010.0644 5446.9583 5010.0644 5446.9583 5010.0644 C 5446.9583 5010.0644 5458.2152 4998.1442 5458.2152 4998.1442 C 5459.0451 4997.2655 5460.3906 4997.2655 5461.2205 4998.1442Z"></path>
+	<defs>
+		<mask maskUnits="userSpaceOnUse" id="tSvg2b87a5c7b0m" data-svg-id="tSvgHighlight">
+			<rect x="0" y="0" width="12000" height="10000" fill="white"></rect>
+			<path fill="black" fill-opacity="1" stroke="black" stroke-opacity="1" stroke-width="1" fill-rule="evenodd" data-svg-name="path" data-svg-id="2b87a5c7b0" d="M 5445.936078431373 4973.568127152303 C 5448.263039215686 4971.479453340943 5451.67 4971.476996077635 5453.999705882353 4973.562131429832 C 5472.778333333334 4990.368829547686 5472.778333333334 4990.368829547686 5472.778333333334 4990.368829547686 C 5474.186960784314 4991.629503914956 5475 4993.4858189079605 5475 4995.441702210184 C 5475 5024.337054604994 5475 5024.337054604994 5475 5024.337054604994 C 5475 5027.187185170075 5472.82362745098 5029.497602422302 5470.138921568628 5029.497602422302 C 5429.861078431372 5029.497602422302 5429.861078431372 5029.497602422302 5429.861078431372 5029.497602422302 C 5427.17637254902 5029.497602422302 5425 5027.187185170075 5425 5024.337054604994 C 5425 4995.437967169956 5425 4995.437967169956 5425 4995.437967169956 C 5425 4993.485229164767 5425.8101960784315 4991.631764597199 5427.214803921569 4990.370991939396 C 5445.936078431373 4973.568127152303 5445.936078431373 4973.568127152303 5445.936078431373 4973.568127152303 M 5451.314215686275 4976.944013774653 C 5450.537549019608 4976.249001420766 5449.401960784314 4976.249886035556 5448.626078431373 4976.946077875832 C 5429.904901960784 4993.748942662925 5429.904901960784 4993.748942662925 5429.904901960784 4993.748942662925 C 5429.4367647058825 4994.169232979038 5429.166666666667 4994.787087265071 5429.166666666667 4995.437967169956 C 5429.166666666667 5024.337054604994 5429.166666666667 5024.337054604994 5429.166666666667 5024.337054604994 C 5429.166666666667 5024.743977408712 5429.477549019608 5025.074233597238 5429.861078431372 5025.074233597238 C 5470.138921568628 5025.074233597238 5470.138921568628 5025.074233597238 5470.138921568628 5025.074233597238 C 5470.522549019608 5025.074233597238 5470.833333333333 5024.743977408712 5470.833333333333 5024.337054604994 C 5470.833333333333 4995.441702210184 5470.833333333333 4995.441702210184 5470.833333333333 4995.441702210184 C 5470.833333333333 4994.789741109443 5470.562254901961 4994.171002208619 5470.092745098039 4993.750711892507 C 5451.314215686275 4976.944013774653 5451.314215686275 4976.944013774653 5451.314215686275 4976.944013774653" style=""></path>
+		</mask>
+	</defs>
+</svg>
+					</a>
+				</div>
+				<div class="title me-sm-auto me-0 ps-0">
+					<p class="main_title"><a href="/" class="main_link">{{ landing_page.title }}</a></p>
+					<p class="sub_title">агентство недвижимости</p>
+				</div>
+				<div class="contact d-none d-sm-block">
+					<a href="tel:8 (943) 495-15-15" class="top_phone text-end d-block">8 (943) 495-15-15</a>
+					<a class="top_phone_text text-end d-block">с 9.00 до 20.00</a>
+				</div>
+				<div class="button d-none d-md-block">
+					<button class="btn btn-pink" data-bs-toggle="modal" data-bs-target="#headerModal">связаться</button>
+									</div>
+			</div>
+		</header>
+		
+		<div class="modal fade" id="headerModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+			<form method="post" action="/send/" class="needs-validation " novalidate>
+			<div class="modal-content">
+			  <div class="modal-body p-4">
+							    <p class="modal-title text-center">СВЯЖИТЕСЬ СО МНОЙ</p>
+				<p class="modal-text text-center">Укажите контакты, чтобы мы могли связаться c Вами и ответить на вопросы</p>
+								<div class="input-control small-control border-gray my-2">
+										<input type="text" name="info[name]" placeholder="Укажите Ваше Имя" />
+										<input type="hidden" name="info_label[name]" value="ФИО" />
+				</div>
+				<div class="input-control small-control border-gray my-4">
+
+					<input type="tel" name="info[phone]" placeholder="+7 (999) 999 99 99" required>					
+
+					<div class="invalid-feedback">
+					  Пожалуйста укажите телефон
+				    </div>
+					<input type="hidden" name="info_label[phone]" value="Телефон" />
+				</div>
+				<div class="small-control">
+					<button type="submit" class="btn btn-pink w-100">Связаться</button>
+				</div>
+			  </div>
+			</div>
+			</form>
+		  </div>
+		</div>
+		<div class="modal fade" id="primaryModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			  <div class="modal-header bg-gray align-items-start px-4">оставте контакты, чтобы мы отправили вам предложение с подборкой вариантов</div>
+			  <div class="modal-body p-4">
+				<div class="modal-pool">
+					<form action="/send/" method="post" class="pool-slides needs-validation" novalidate>
+																		<div class="pool-slide step0">
+								<div class="form-group small-control my-0 text-center">
+									<label class="my-3"><b>1.</b> какое количество комнат необходимо?</label>
+									<div class="select-control small-control border-gray">
+										<select name="info[24599]"><option value="Студия">Студия</option><option value="1 комнатная">1 комнатная</option><option value="2 комнатная">2 комнатная</option><option value="3 комнатная">3 комнатная</option><option value="4 и более">4 и более</option></select>
+										<input type="hidden" name="info_label[24599]" value="какое количество комнат необходимо?" />
+									</div>
+								</div>
+								<div class="form-group small-control d-flex my-3 justify-content-lg-end justify-content-center">
+																		<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 pool-slide-control" data-target-slide="step1">Далее →</button>
+								</div>
+							</div>
+													<div class="pool-slide step1">
+								<div class="form-group small-control my-0 text-center">
+									<label class="my-3"><b>2.</b> какой район вы рассматриваете?</label>
+									<div class="select-control small-control border-gray">
+										<select name="info[24600]"><option value="Любой район">Любой район</option><option value="Куйбышевский район">Куйбышевский район</option><option value="Ленинский район">Ленинский район</option><option value="Железнодорожный район">Железнодорожный район</option><option value="Октябрьский район">Октябрьский район</option><option value="Советский район">Советский район</option><option value="Промышленный район">Промышленный район</option></select>
+										<input type="hidden" name="info_label[24600]" value="какой район вы рассматриваете?" />
+									</div>
+								</div>
+								<div class="form-group small-control d-flex my-3 justify-content-lg-between justify-content-center">
+									<button type="button" class="btn btn-pink-trans w-auto px-3 py-2 me-1 pool-slide-control" data-target-slide="step0">← Назад</button>									<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 pool-slide-control" data-target-slide="step2">Далее →</button>
+								</div>
+							</div>
+													<div class="pool-slide step2">
+								<div class="form-group small-control my-0 text-center">
+									<label class="my-3"><b>3.</b> какой бюджет планируете на покупку?</label>
+									<div class="select-control small-control border-gray">
+										<select name="info[24601]"><option value="около 4 млн.">около 4 млн.</option><option value="до 4,5 млн.">до 4,5 млн.</option><option value="до 5 млн.">до 5 млн.</option><option value="до 5,5 млн.">до 5,5 млн.</option><option value="до 6 млн.">до 6 млн.</option><option value="до 6,5 млн.">до 6,5 млн.</option><option value="до 7 млн.">до 7 млн.</option><option value="до 8 млн.">до 8 млн.</option><option value="до 9 млн.">до 9 млн.</option><option value="до 10 млн.">до 10 млн.</option><option value="более 10 млн.">более 10 млн.</option></select>
+										<input type="hidden" name="info_label[24601]" value="какой бюджет планируете на покупку?" />
+									</div>
+								</div>
+								<div class="form-group small-control d-flex my-3 justify-content-lg-between justify-content-center">
+									<button type="button" class="btn btn-pink-trans w-auto px-3 py-2 me-1 pool-slide-control" data-target-slide="step1">← Назад</button>									<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 pool-slide-control" data-target-slide="step3">Далее →</button>
+								</div>
+							</div>
+													<div class="pool-slide step3">
+								<div class="form-group small-control my-0 text-center">
+									<label class="my-3"><b>4.</b> Нужны ли финансовые инструменты?</label>
+									<div class="select-control small-control border-gray">
+										<select name="info[24602]"><option value="Не требуется">Не требуется</option><option value="Ипотека">Ипотека</option><option value="Рассрочка">Рассрочка</option><option value="Мат. Капитал">Мат. Капитал</option></select>
+										<input type="hidden" name="info_label[24602]" value="Нужны ли финансовые инструменты?" />
+									</div>
+								</div>
+								<div class="form-group small-control d-flex my-3 justify-content-lg-between justify-content-center">
+									<button type="button" class="btn btn-pink-trans w-auto px-3 py-2 me-1 pool-slide-control" data-target-slide="step2">← Назад</button>									<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 pool-slide-control" data-target-slide="step4">Последний шаг →</button>
+								</div>
+							</div>
+																	<div class="pool-slide step4">
+							<div class="form-group my-0 text-center">
+								<label class="mb-3">оставте контакты, чтобы мы отправили вам предложение с подборкой вариантов</label>
+								<div class="input-control small-control border-gray">
+																		<input type="text" name="info[name]" placeholder="Укажите Ваше Имя" />
+																		<input type="hidden" name="info_label[name]" value="Имя" />
+								</div>
+							</div>
+							<div class="form-group my-3 text-center">
+								<div class="input-control small-control border-gray">
+									<input type="tel" name="info[phone]" placeholder="+7 (999) 999 99 99" required />
+									<div class="invalid-feedback text-start">
+									  Пожалуйста укажите телефон
+									</div>
+									<input type="hidden" name="info_label[phone]" value="Телефон" />
+								</div>
+							</div>
+							<div class="form-group small-control d-flex my-3 justify-content-lg-between justify-content-center">
+								<button type="button" class="btn btn-pink-trans w-auto px-3 py-2 me-1 pool-slide-control" data-target-slide="step3">← Назад</button>								<button type="submit" class="btn btn-pink w-auto px-3 py-2 ms-1">Подобрать варианты</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<div class="clearfix"></div>
+        {% if landing_page.image %}
+		<section class="primary-main lozad" data-background-image="{{ landing_page.image.url }}" data-background-delimiter="*-*">
+            {% else %}
+            <section class="primary-main lozad" data-background-image="/images/default_image.jpg.2000x800.jpg*-*data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAAEAAUDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EABsQAAIDAQEBAAAAAAAAAAAAAAMEAgUGAQcW/8QAFQEBAQAAAAAAAAAAAAAAAAAABQb/xAAgEQACAgICAgMAAAAAAAAAAAABAgMEBhESEwUUByEi/9oADAMBAAIRAxEAPwBRM2Fwvkcylbv1exWjYaN+phtsD5dpp5tJ3lKL57PmsMLM6VArJLh1FDEaYGVg0SOFXgoBVW78n5yknsUsgveNlsFlstQleL2eghYnnEjTB5EDyHsHFmMjFyx46g4MGxrpWN/G1plV5JF7q1OUqZm24UtWPFPyukXSgD6G9k//2Q==" data-background-delimiter="*-*"></section>
+            {% endif %}
+            <div class="background w-100">
+				<div class="container h-100 d-flex flex-column justify-content-center">
+					<div class="col-12 col-xl-10 mx-auto d-flex overflow-hidden flex-column vertical-align-center justify-content-center text-center" >
+						<p class="up-title"><i class="position-icon me-1"><svg viewBox="5498 5030 14 18.008914947509766" width="20" style="fill: var(--accent_color);"><path fill-opacity="1" stroke="" stroke-opacity="1" stroke-width="1" fill-rule="evenodd" id="tSvgbfd1624ab8" d="M 5509.166 5039.9487890625 C 5508.642 5041.0107890625 5507.932 5042.0687890625 5507.206 5043.0187890625 C 5506.5173 5043.9143890625 5505.7809 5044.7722890625 5505 5045.5887890625 C 5504.2191 5044.7722890625 5503.4827 5043.9143890625 5502.794 5043.0187890625 C 5502.068 5042.0687890625 5501.358 5041.0107890625 5500.834 5039.9487890625 C 5500.304 5038.8757890625 5500 5037.8707890625 5500 5037.0087890625 C 5500 5033.1597890625 5504.1667 5030.7541890625 5507.5 5032.6786890625 C 5509.047 5033.5717890625 5510 5035.2224890625 5510 5037.0087890625 C 5510 5037.8707890625 5509.695 5038.8757890625 5509.166 5039.9487890625 C 5509.166 5039.9487890625 5509.166 5039.9487890625 5509.166 5039.9487890625 M 5505 5047.0087890625 C 5505 5047.0087890625 5511 5041.3227890625 5511 5037.0087890625 C 5511 5032.3899890625 5506 5029.5031890625 5502 5031.8125890625 C 5500.1436 5032.8843890625 5499 5034.8651890625 5499 5037.0087890625 C 5499 5041.3227890625 5505 5047.0087890625 5505 5047.0087890625 C 5505 5047.0087890625 5505 5047.0087890625 5505 5047.0087890625"></path><path fill-opacity="1" stroke="" stroke-opacity="1" stroke-width="1" fill-rule="evenodd" id="tSvg9d1a7a45ec" d="M 5505 5039.0087890625 C 5503.4604 5039.0087890625 5502.4981 5037.3420890625 5503.2679 5036.0087890625 C 5503.6252 5035.3899890625 5504.2855 5035.0087890625 5505 5035.0087890625 C 5506.5396 5035.0087890625 5507.5019 5036.6754890625 5506.7321 5038.0087890625 C 5506.3748 5038.6275890625 5505.7145 5039.0087890625 5505 5039.0087890625 C 5505 5039.0087890625 5505 5039.0087890625 5505 5039.0087890625 M 5505 5040.0087890625 C 5507.3094 5040.0087890625 5508.7528 5037.5087890625 5507.5981 5035.5087890625 C 5507.0622 5034.5805890625 5506.0718 5034.0087890625 5505 5034.0087890625 C 5502.6906 5034.0087890625 5501.2472 5036.5087890625 5502.4019 5038.5087890625 C 5502.9378 5039.4369890625 5503.9282 5040.0087890625 5505 5040.0087890625 C 5505 5040.0087890625 5505 5040.0087890625 5505 5040.0087890625"></path><defs></defs></svg></i> {{ landing_page.top_description }}</p>						<h1>{{ landing_page.title }}</h1>
+						<p class="sub-title">{{ landing_page.down_description }}</p>												<div class="row characters row-cols-1 row-cols-md-3 my-5 justify-content-between text-start">
+														<div class="col">
+								<div class="col my-3 ps-3 character">
+									<p>{{ landing_page.characteristic }}</p>
+									<span>{{ landing_page.description2 }}</span>
+								</div>
+							</div>
+
+													</div>
+												<div class="small-control">
+							<button class="btn btn-pink btn-hover-white px-3 py-2" data-bs-toggle="modal" data-bs-target="#primaryModal">Подобрать вариант</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+					{% if landing_page.video %}
+					<section class="video-block bg-gray">
+			<div class="big_title"><p>Видео</p></div>
+			<div class="container">
+				<div class="col-10 m-auto" style="height: 540px">
+					<iframe width="100%" height="540px" src="https://www.youtube.com/watch?v=zrT4_8S7jpY" frameborder="0" allowfullscreen="" style="height: 540px; border-radius: 15px;"></iframe>
+				</div>
+			</div>
+		</section>
+                {% endif %}
+				<section class="primary-text bg-gray">
+			<div class="container-md text-center">
+				<div class="col-12 col-md-10 col-xl-8 m-auto">
+				<p>
+					{{ landing_page.about_before_slide }}
+				</p>
+				</div>
+			</div>
+		</section>
+
+				<section class="primary-slider bg-gray p-0">
+			<div data-glide-el="track" class="glide__track">
+
+				<ul class="glide__slides p-0">
+                    {% for image in images %}
+                    {% if image.image_s %}
+										<li class="glide__slide">
+						<div class="img">
+							<img loading="lazy" src="{{ image.image_s.url }}" />
+						</div>
+					</li>
+                    {% endif %}
+                    {% endfor %}
+									</ul>
+								<div class="slider__controls">
+					<div class="slider__arrows glide__arrows" data-glide-el="controls">
+						<button class="slider__arrow slider__arrow--prev glide__arrow glide__arrow--prev" data-glide-dir="<">
+						  <svg role="presentation" focusable="false" style="display: block" viewBox="0 0 9.3 17" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polyline fill="none" stroke="#333333" stroke-linejoin="butt" stroke-linecap="butt" stroke-width="1" points="8.5,0.5 0.5,8.5 8.5,16.5"></polyline></svg>
+						</button>
+
+						<button class="slider__arrow slider__arrow--next glide__arrow glide__arrow--next" data-glide-dir=">">
+						  <svg role="presentation" focusable="false" style="display: block" viewBox="0 0 9.3 17" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polyline fill="none" stroke="#333333" stroke-linejoin="butt" stroke-linecap="butt" stroke-width="1" points="0.5,0.5 8.5,8.5 0.5,16.5"></polyline></svg>
+						</button>
+					</div>
+				</div>
+							</div>
+
+
+			
+						<div class="slider__bullets glide__bullets" data-glide-el="controls[nav]">
+								<button class="slider__bullet glide__bullet" data-glide-dir="=0"></button>
+								<button class="slider__bullet glide__bullet" data-glide-dir="=1"></button>
+							</div>
+					</section>
+				
+		<section class="primary-text bg-gray">
+			<div class="container text-center">
+				<div class="col-12 col-md-10 col-xl-8 m-auto">
+					<p>{{ landing_page.about_after_slide }}</p>
+				</div>
+				<button class="btn btn-lg btn-pink btn-hover-white mt-3"  data-bs-toggle="modal" data-bs-target="#interestModal">Подписаться на новости</button>
+			</div>
+			<div class="modal fade bd-example-modal-xl" id="interestModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-xl modal-dialog-centered">
+				
+				<div class="modal-content">
+				  <div class="modal-body px-5 pt-5">
+					<div class="row d-flex row-cols-lg-2 row-cols-1 justify-content-center pt-5 pb-4">
+						<div class="col col-xl-5 col-lg-6 col-12">
+							<span class="interest_title d-block">ПОДПИШИТЕСЬ<br />НА ОБНОВЛЕНИЯ</span>
+							<p class="my-4">Расскажите, какую недвижимость ищите, и даже если сейчас такой нет в продаже на рынке нашего города, как только появятся варианты – сразу сообщим<br /><br />А так же узнавайте первыми о новых проектах и объектах в продаже, не выкупленными другими покупателями</p>
+						</div>
+						<div class="col ps-lg-5 col-xl-5 col-lg-6 col-12">
+							<form action="/send/" method="post" class="needs-validation" novalidate>
+								<div class="input-control small-control border-gray my-2">
+																		<input type="text" name="info[name]" placeholder="Укажите Ваше Имя" />
+																		<input type="hidden" name="info_label[name]" value="Имя" />
+								</div>
+								<div class="input-control small-control border-gray my-4">
+									<input type="tel" name="info[phone]" placeholder="+7 (999) 999 99 99" required />
+									<div class="invalid-tooltip ">
+									  Пожалуйста укажите телефон
+									</div>
+									<input type="hidden" name="info_label[phone]" value="Телефон" />
+								</div>
+																<span class="text my-4">предпочтительный способ связи:</span>
+								<input type="hidden" name="info_label[sv]" value="предпочтительный способ связи:" />
+								<div class="my-4">
+									<div class="form-check my-2">
+									  <input class="form-check-input" type="radio" name="info[sv]" value="Телефон" id="sv1">
+									  <label class="form-check-label" for="sv1">
+										Телефон
+									  </label>
+									</div>
+									<div class="form-check my-2">
+									  <input class="form-check-input" type="radio" name="info[sv]" value="WhatsApp" id="sv2">
+									  <label class="form-check-label" for="sv2">
+										WhatsApp
+									  </label>
+									</div>
+									<div class="form-check my-2">
+									  <input class="form-check-input" type="radio" name="info[sv]" value="Telegram" id="sv3">
+									  <label class="form-check-label" for="sv3">
+										Telegram
+									  </label>
+									</div>
+								</div>
+								<div class="form-group row my-5 justify-content-lg-start justify-content-center">
+									<button class="btn btn-pink ms-lg-2 px-4 py-2 w-auto" type="submit">Зарегистрировать</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				  </div>
+				</div>
+				
+			  </div>
+			</div>
+		</section>
+
+		
+				<section class="primary-characters bg-gray">
+			<div class="big_title"><p>{{ landing_page.title }} ЭТО</p></div>
+			<div class="container pt-4">
+															<div class="row d-flex row-cols-1 flex-lg-row   pb-5 flex-md-column row-cols-lg-2">
+							<div>
+								<img class="preem-img" loading="lazy" src="/images/free-icon-user-219983.700x460.png" height="460" />
+							</div>
+							<div class="postion-relative">
+								<div class="preem-text">
+									<label>{{ landing_page.advantages }}</label>
+									<p>{{ landing_page.deteil_description }}</p>								</div>
+							</div>
+						</div>
+										
+															</div>
+		</section>
+				
+		
+				<section class="primary-map d-flex align-items-center p-0 ">
+			<div id="map" style="width: 100%; height: 650px;"></div>	
+		</section>
+		
+		<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=ded55abe-2cf4-4ce2-aec7-aac411556502" type="text/javascript"></script>
+		
+		<section class="consult-block lozad" data-background-image="/images/default_image.jpg.2000x800.jpg*-*data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAAEAAUDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EABsQAAIDAQEBAAAAAAAAAAAAAAMEAgUGAQcW/8QAFQEBAQAAAAAAAAAAAAAAAAAABQb/xAAgEQACAgICAgMAAAAAAAAAAAABAgMEBhESEwUUByEi/9oADAMBAAIRAxEAPwBRM2Fwvkcylbv1exWjYaN+phtsD5dpp5tJ3lKL57PmsMLM6VArJLh1FDEaYGVg0SOFXgoBVW78n5yknsUsgveNlsFlstQleL2eghYnnEjTB5EDyHsHFmMjFyx46g4MGxrpWN/G1plV5JF7q1OUqZm24UtWPFPyukXSgD6G9k//2Q==" data-background-delimiter="*-*">
+			<div class="background w-100 d-flex flex-row align-items-center">
+				<div class="container">
+					<div class="h-100 mx-auto d-flex flex-column justify-content-center text-center">
+						<span>ОНЛАЙН КОНСУЛЬТАЦИЯ</span>
+						<p class="my-4">получите больше информации о проекте<br />и задайте свои вопросы</p>
+						<div class="row col-10 col-xl-8 col-xxl-6 mx-auto row-cols-1 row-cols-md-3 mt-3">
+							<div class="col my-3 px-3 py-2 small-control">
+								<button class="btn btn-pink btn-hover-white w-100" data-bs-toggle="modal" data-bs-target="#headerModal">по телефону</button>
+							</div>
+														<div class="col my-3 px-3 py-2 small-control">
+								<a href="https://wa.me/%2B79434951515?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5.+%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82+%D0%BF%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D0%B0+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B+%D0%B2+%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%B5" target="_blank" class="btn btn-wa btn-hover-white w-100">WhatsApp</a>
+							</div>
+																					<div class="col my-3 px-3 py-2 small-control">
+								<a href="https://t.me/rich_realtor_family" target="_blank" class="btn btn-tg btn-hover-white w-100">Telegram</a>
+							</div>
+													</div>
+					</div>
+				</div>
+			</div>
+		
+		
+		
+				<section class="main_pool bg-gray">
+			<div class="container-xxl d-flex justify-content-center">
+				<div class="col-xl-7 сol-md-12 col-sm-12 col-xs-12">
+					<div class="big_title"><p>НЕ НАШЛИ ПОДХОДЯЩЕЕ?</p></div>
+					<div class="small_title col-sm-12 col-md-8 mx-auto"><p>Укажите параметры недвижимости и мы подберем варианты в течение дня бесплатно</p></div>
+					
+					<div class="pool_border">
+						<form action="/send/" method="post" class="pool-slides needs-validation" novalidate>
+																					<div class="pool-slide step0">
+									<div class="form-group small-control row my-3 text-center">
+										<label class="my-3"><b>1.</b> какое количество комнат необходимо?</label>
+										<div class="select-control small-control border-gray">
+											<select name="info[24599]"><option value="Студия">Студия</option><option value="1 комнатная">1 комнатная</option><option value="2 комнатная">2 комнатная</option><option value="3 комнатная">3 комнатная</option><option value="4 и более">4 и более</option></select>
+											<input type="hidden" name="info_label[24599]" value="какое количество комнат необходимо?" />
+										</div>
+									</div>
+									<div class="form-group small-control row my-3 justify-content-lg-end justify-content-center">
+																													<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step1">Далее →</button>
+																		</div>
+								</div>
+															<div class="pool-slide step1">
+									<div class="form-group small-control row my-3 text-center">
+										<label class="my-3"><b>2.</b> какой район вы рассматриваете?</label>
+										<div class="select-control small-control border-gray">
+											<select name="info[24600]"><option value="Любой район">Любой район</option><option value="Куйбышевский район">Куйбышевский район</option><option value="Ленинский район">Ленинский район</option><option value="Железнодорожный район">Железнодорожный район</option><option value="Октябрьский район">Октябрьский район</option><option value="Советский район">Советский район</option><option value="Промышленный район">Промышленный район</option></select>
+											<input type="hidden" name="info_label[24600]" value="какой район вы рассматриваете?" />
+										</div>
+									</div>
+									<div class="form-group small-control row my-3 justify-content-lg-between justify-content-center">
+																			<button type="button" class="btn btn-pink w-auto px-3 py-2 me-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step0">← Назад</button>										<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step2">Далее →</button>
+																		</div>
+								</div>
+															<div class="pool-slide step2">
+									<div class="form-group small-control row my-3 text-center">
+										<label class="my-3"><b>3.</b> какой бюджет планируете на покупку?</label>
+										<div class="select-control small-control border-gray">
+											<select name="info[24601]"><option value="около 4 млн.">около 4 млн.</option><option value="до 4,5 млн.">до 4,5 млн.</option><option value="до 5 млн.">до 5 млн.</option><option value="до 5,5 млн.">до 5,5 млн.</option><option value="до 6 млн.">до 6 млн.</option><option value="до 6,5 млн.">до 6,5 млн.</option><option value="до 7 млн.">до 7 млн.</option><option value="до 8 млн.">до 8 млн.</option><option value="до 9 млн.">до 9 млн.</option><option value="до 10 млн.">до 10 млн.</option><option value="более 10 млн.">более 10 млн.</option></select>
+											<input type="hidden" name="info_label[24601]" value="какой бюджет планируете на покупку?" />
+										</div>
+									</div>
+									<div class="form-group small-control row my-3 justify-content-lg-between justify-content-center">
+																			<button type="button" class="btn btn-pink w-auto px-3 py-2 me-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step1">← Назад</button>										<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step3">Далее →</button>
+																		</div>
+								</div>
+															<div class="pool-slide step3">
+									<div class="form-group small-control row my-3 text-center">
+										<label class="my-3"><b>4.</b> Нужны ли финансовые инструменты?</label>
+										<div class="select-control small-control border-gray">
+											<select name="info[24602]"><option value="Не требуется">Не требуется</option><option value="Ипотека">Ипотека</option><option value="Рассрочка">Рассрочка</option><option value="Мат. Капитал">Мат. Капитал</option></select>
+											<input type="hidden" name="info_label[24602]" value="Нужны ли финансовые инструменты?" />
+										</div>
+									</div>
+									<div class="form-group small-control row my-3 justify-content-lg-between justify-content-center">
+																			<button type="button" class="btn btn-pink w-auto px-3 py-2 me-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step2">← Назад</button>										<button type="button" class="btn btn-pink w-auto px-3 py-2 ms-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step4">Последний шаг →</button>
+																		</div>
+								</div>
+																				<div class="pool-slide step4">
+								<div class="form-group row my-3 text-center">
+									<label class="my-3">оставте контакты, чтобы мы отправили вам предложение с подборкой вариантов</label>
+									<div class="input-control small-control border-gray">
+																				<input type="text" name="info[name]" placeholder="Укажите Ваше Имя" />
+																				<input type="hidden" name="info_label[name]" value="Имя" />
+									</div>
+								</div>
+								<div class="form-group row my-3 text-center">
+									<div class="input-control small-control border-gray">
+										<input type="tel" name="info[phone]" placeholder="+7 (999) 999 99 99" required />
+										<div class="invalid-feedback text-start">
+										  Пожалуйста укажите телефон
+										</div>
+										<input type="hidden" name="info_label[phone]" value="Телефон" />
+									</div>
+								</div>
+								<div class="form-group small-control row my-3 justify-content-lg-between justify-content-center">
+																			<button type="button" class="btn btn-pink w-auto px-3 py-2 me-1 my-2 my-sm-0 pool-slide-control" data-target-slide="step3">← Назад</button>																		<button type="submit" class="btn btn-pink w-auto px-3 py-2 ms-1 my-2 my-sm-0">Подобрать варианты</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer></footer>
+		<div class="call-widget">
+	<div class="collapse " id="call_collapse">
+	<ul class="widget-collapse">
+	  	  <li>
+		<a href="{{ contact_info.tg_link }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Написать в Telegram">
+		  <svg class="t-sociallinks__svg" role="presentation" width="50px" height="50px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100c27.614 0 50-22.386 50-50S77.614 0 50 0 0 22.386 0 50s22.386 50 50 50Zm21.977-68.056c.386-4.38-4.24-2.576-4.24-2.576-3.415 1.414-6.937 2.85-10.497 4.302-11.04 4.503-22.444 9.155-32.159 13.734-5.268 1.932-2.184 3.864-2.184 3.864l8.351 2.577c3.855 1.16 5.91-.129 5.91-.129l17.988-12.238c6.424-4.38 4.882-.773 3.34.773l-13.49 12.882c-2.056 1.804-1.028 3.35-.129 4.123 2.55 2.249 8.82 6.364 11.557 8.16.712.467 1.185.778 1.292.858.642.515 4.111 2.834 6.424 2.319 2.313-.516 2.57-3.479 2.57-3.479l3.083-20.226c.462-3.511.993-6.886 1.417-9.582.4-2.546.705-4.485.767-5.362Z" fill="#1d98dc"></path></svg>
+		</a>
+	  </li>
+	  	  	  <li>
+		<a href="{{ contact_info.whatsapp }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Написать в WhatsApp">
+		  <svg role="presentation" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 50a25 25 0 100-50 25 25 0 000 50z" fill="#fff"></path><path d="M26.1 12a12.1 12.1 0 00-10.25 18.53l.29.46-1.22 4.46 4.57-1.2.45.27a12.1 12.1 0 106.16-22.51V12zm6.79 17.22c-.3.85-1.72 1.62-2.41 1.72-.62.1-1.4.14-2.25-.14-.7-.22-1.37-.47-2.03-.77-3.59-1.57-5.93-5.24-6.1-5.48-.19-.24-1.47-1.97-1.47-3.76 0-1.79.93-2.67 1.25-3.03.33-.37.72-.46.96-.46.23 0 .47 0 .68.02.22 0 .52-.09.8.62l1.1 2.7c.1.18.16.4.04.64s-.18.39-.36.6c-.18.21-.38.47-.54.64-.18.18-.36.38-.15.74.2.36.92 1.55 1.98 2.52 1.37 1.23 2.52 1.62 2.88 1.8.35.18.56.15.77-.1.2-.23.9-1.05 1.13-1.42.24-.36.48-.3.8-.18.33.12 2.09 1 2.44 1.18.36.19.6.28.69.43.09.15.09.88-.21 1.73z" fill="#27D061"></path><path d="M25 0a25 25 0 100 50 25 25 0 000-50zm1.03 38.37c-2.42 0-4.8-.6-6.9-1.76l-7.67 2 2.05-7.45a14.3 14.3 0 01-1.93-7.2c0-7.92 6.49-14.38 14.45-14.38a14.4 14.4 0 110 28.79z" fill="#27D061"></path></svg>
+		</a>
+	  </li>
+	  	  
+	  	  <li>
+		<a href="{{ contact_info.number }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Позвонить">
+		  <svg class="t-sociallinks__svg" role="presentation" width="50px" height="50px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM50.0089 29H51.618C56.4915 29.0061 61.1633 30.9461 64.6073 34.3938C68.0512 37.8415 69.9856 42.5151 69.9856 47.3879V48.9968C69.9338 49.5699 69.6689 50.1027 69.2433 50.49C68.8177 50.8772 68.2623 51.0908 67.6868 51.0884H67.5029C66.8966 51.0358 66.3359 50.745 65.9437 50.2796C65.5516 49.8143 65.36 49.2124 65.4109 48.6061V47.3879C65.4109 43.7303 63.9578 40.2225 61.3711 37.6362C58.7844 35.0499 55.2761 33.597 51.618 33.597H50.3997C49.79 33.6488 49.1847 33.4563 48.7169 33.0619C48.2492 32.6675 47.9573 32.1035 47.9054 31.4939C47.8536 30.8843 48.0461 30.279 48.4406 29.8114C48.835 29.3437 49.3992 29.0518 50.0089 29ZM56.889 49.0132C56.4579 48.5821 56.2157 47.9975 56.2157 47.3879C56.2157 46.1687 55.7313 44.9994 54.869 44.1373C54.0068 43.2752 52.8374 42.7909 51.618 42.7909C51.0083 42.7909 50.4236 42.5488 49.9925 42.1177C49.5614 41.6867 49.3192 41.102 49.3192 40.4924C49.3192 39.8828 49.5614 39.2982 49.9925 38.8672C50.4236 38.4361 51.0083 38.1939 51.618 38.1939C54.0568 38.1939 56.3956 39.1626 58.1201 40.8868C59.8445 42.611 60.8133 44.9495 60.8133 47.3879C60.8133 47.9975 60.5711 48.5821 60.14 49.0132C59.7089 49.4442 59.1242 49.6864 58.5145 49.6864C57.9048 49.6864 57.3201 49.4442 56.889 49.0132ZM66.4011 69.0663L66.401 69.0846C66.3999 69.5725 66.2967 70.0547 66.0981 70.5003C65.8998 70.9451 65.611 71.3435 65.2499 71.67C64.8674 72.0182 64.4123 72.2771 63.9176 72.428C63.4516 72.5702 62.9613 72.6132 62.4782 72.5546C58.2475 72.53 53.4102 70.5344 49.1802 68.1761C44.8871 65.7827 41.0444 62.915 38.8019 60.9903L38.7681 60.9613L38.7367 60.9299C32.3303 54.5198 28.2175 46.1735 27.0362 37.186C26.9623 36.6765 27.0018 36.157 27.1519 35.6645C27.3027 35.1695 27.5615 34.7142 27.9094 34.3314C28.2397 33.9658 28.6436 33.6742 29.0944 33.4757C29.5447 33.2775 30.0316 33.1766 30.5234 33.1796H37.4967C38.299 33.1636 39.0826 33.4244 39.7156 33.9184C40.3527 34.4156 40.7979 35.1184 40.9754 35.9071L41.0038 36.0335V36.1631C41.0038 36.4901 41.0787 36.795 41.1847 37.2268C41.2275 37.4012 41.2755 37.5965 41.3256 37.8221L41.326 37.8238C41.583 38.9896 41.925 40.1351 42.3491 41.251L42.7322 42.259L38.4899 44.26L38.4846 44.2625C38.204 44.3914 37.986 44.6263 37.8784 44.9157L37.8716 44.934L37.8642 44.952C37.7476 45.236 37.7476 45.5545 37.8642 45.8385L37.9144 45.9608L37.9359 46.0912C38.0802 46.9648 38.5603 48.0981 39.4062 49.4169C40.243 50.7215 41.3964 52.1437 42.808 53.5872C45.6206 56.4634 49.3981 59.3625 53.5798 61.5387C53.8533 61.6395 54.1552 61.6343 54.4257 61.5231L54.4437 61.5157L54.462 61.5089C54.7501 61.4016 54.9842 61.1848 55.1133 60.9057L55.1148 60.9023L57.0232 56.6591L58.0397 57.03C59.1934 57.4509 60.3737 57.7947 61.5729 58.0592L61.5785 58.0605L61.5841 58.0618C62.152 58.1929 62.7727 58.3042 63.3802 58.3942L63.4231 58.4006L63.4654 58.4101C64.2537 58.5877 64.956 59.0332 65.453 59.6706C65.9429 60.2991 66.2033 61.0758 66.1916 61.8721L66.4011 69.0663Z" fill="#000"></path></svg>
+		</a>
+	  </li>
+	  	</ul>
+	</div>
+
+	<button class="btn-widget btn-close collapsed" aria-label="Close" type="button" data-bs-toggle="collapse" data-bs-target="#call_collapse" aria-expanded="false" aria-controls="call_collapse" data-bs-toggle="tooltip" data-bs-placement="left" title="Написать в мессенджер">
+		<img src="{{ contact_info.image_contacts.url }}" />		<i class="circle"></i>
+	</button>
+	<div class="tooltip bs-tooltip-start d-none d-sm-block" style="position: absolute;right: 86px;bottom: 16px; text-wrap: nowrap;" data-popper-placement="left">
+		<div class="tooltip-arrow" style="position: absolute; top: 0px; transform: translate(0px, 10px);"></div>
+		<div class="tooltip-inner">Написать в мессенджер</div>
+	</div>
+</div>
+
+		
+		<script src="//static.realtor.promo/the_first_exp/assets/bootstrap/js/bootstrap.bundle.min.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/lozad.min.js?ver=1725648809"></script>
+
+		<script src="//static.realtor.promo/the_first_exp/js/jquery.min.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/pool-slides.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/glide.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/jquery.phonemaskedinput.countries.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/jquery.phonemaskedinput.js?ver=1725648809"></script>
+		<script src="//static.realtor.promo/the_first_exp/js/fancybox.umd.js?ver=1725648809"></script>
+		<script>
+
+			
+			$(document).ready(function(){
+				var glide = new Glide('.primary-slider', {
+				  type: 'carousel',
+				  perView: 2,
+				  focusAt: 'center',
+				  //autoplay: 4000,
+				   breakpoints: {
+				   	1750: {
+					  perView: 1.5,
+					},
+					1350: {
+					  perView: 1.35,
+					},
+					1024: {
+					  perView: 1.2,
+					},
+					992: {
+					  perView: 1,
+					}
+				  }
+				});
+				
+				function auto_arrow()
+				{
+					// Делаем стрелки
+					let slide_width = $(".glide__slide").width();
+					let button_width = $(".slider__arrow").width();
+					$(".slider__arrows").css("max-width", slide_width+(button_width * 2));
+					
+					let image_width = $(".primary-slider .glide__slide .img").each(function(i, e){
+						let image_width = $(e).outerWidth();
+						let image_height = image_width * 9 / 16;
+						$(e).css("height", image_height);
+					});
+				}
+				
+				glide.on("mount.after", auto_arrow);
+				
+				glide.on("resize", auto_arrow);
+				
+				glide.mount();
+				
+				var plans_glide = [];
+				
+				$(".nav-item").click(function(){
+					//var plane_id = $(".tab-pane.active").find(".primary-plan-slider")[0].id;
+					//plans_glide[plane_id].update();
+					
+					$('#selectPlans').val("#"+$(this).find(".nav-link")[0].id).change();
+				});
+				
+				$(".tab-pane").each(function(t,p){
+					if($(this).find(".primary-plan-slider").length > 0){
+						
+						var plan_id = $(this).find(".primary-plan-slider")[0].id;
+						
+						plans_glide[plan_id] = new Glide("#"+plan_id);
+											
+						plans_glide[plan_id].mount();
+
+					}
+				});
+			
+			
+				Fancybox.bind("[data-fancybox]", {
+				  // Your custom options
+				});
+
+				$('#selectPlans').change(function(e){			
+					var someTabTriggerEl = document.querySelector($(this).val());			
+
+					var tab = new bootstrap.Tab(someTabTriggerEl);
+					tab.show();
+					
+					var plane_id = $(".tab-pane.active").find(".primary-plan-slider")[0].id;
+					plans_glide[plane_id].update();
+				});				
+			});
+		</script>
+
+		
+		<script src="//static.realtor.promo/the_first_exp/js/scripts.js?ver=1725648809"></script>
+		
+				<script>
+			ymaps.ready(map_init);
+			
+			function map_init(){
+                var location = "{{ landing_page.location }}".split(',');  // Преобразуем строку в массив координат
+                var latitude = parseFloat(location[0]);  // Получаем широту
+                var longitude = parseFloat(location[1]); // Получаем долготу
+
+				var myMap = new ymaps.Map("map", {
+					center: [latitude, longitude],
+					zoom: 10			});
+				
+				myMap.behaviors.disable('scrollZoom');
+				
+				var placemark = new ymaps.Placemark(myMap.getCenter(), {
+					balloonContentHeader: '<h4>{{ landing_page.title }}</h4>',									}, {
+					preset: 'islands#redDotIcon'
+				})
+				
+				myMap.geoObjects.add(placemark);
+				
+				placemark.balloon.open();
+			}
+		</script>
+				    </body>
+</html>

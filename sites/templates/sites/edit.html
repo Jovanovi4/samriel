@@ -1,4 +1,6 @@
 {% extends 'main/layout.html' %}
+{% load static %}
+
 
 {% block title %}
 {% if building %}
@@ -18,8 +20,7 @@
     {% endif %}
     <form method="post" enctype="multipart/form-data" id="Form_site">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
-        <a href="{% url 'landing' page_id=building.pk %}" class="btn btn-secondary mt-3">Предварительный просмотр</a>
+        <a href="{% url 'landing' page_id=building.pk %}" class="btn btn-primary mt-3">Предварительный просмотр</a>
         
         <ul class="nav nav-tabs" id="propertyTab" role="tablist" style="margin-top: 3%;">
             <li class="nav-item" role="presentation" style="font-size: 14px;">
@@ -60,7 +61,7 @@
                     <div class="image-container-sites">
                         <div class="image-wrapper-building">
                             <img src="{{ building.image.url }}" alt="Image" class="img-thumbnail">
-                            <button type="button" onclick="submitDeleteForm('{{ building.pk }}')" class="delete-btn-building">
+                            <button type="button" onclick="submitDeleteForm('{{ building.pk }}', 'building')" class="delete-btn-building">
                                 <div class="remove-image-building">×</div>
                             </button>
                         </div>
@@ -75,7 +76,7 @@
                     </div>
                     <div class="form-group form-inline mt-4">
                         <div class="inline-field">
-                        {{ form.name.label_tag }} {{ form.name }}
+                        {{ form.name_company.label_tag }} {{ form.name_company }}
                         </div>
                     
                     <div class="inline-field">
@@ -133,7 +134,7 @@
                     <div class="image-container-building mt-2">
                         <div class="image-wrapper-building">
                             <img src="{{ contact.image_contacts.url }}" alt="Image" class="img-thumbnail">
-                            <button type="button" onclick="submitDeleteForm('{{ contact.pk }}')" class="delete-btn-building">
+                            <button type="button" onclick="submitDeleteForm('{{ contact.pk }}', 'contact')" class="delete-btn-building">
                                 <div class="remove-image-building">×</div>
                             </button>
                         </div>
@@ -181,15 +182,16 @@
                     </div>
                 </div>
         
-                <!-- Кнопка для открытия модального окна -->
+
                 <div class="form-container-theme mt-3">
-                    
                     <!-- Скрытые элементы для хранения данных -->
                     <div class="container-box">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#iconModal">Выбрать иконку</button>
-                        <input type="hidden" id="icon" name="icon">
+                        <!-- Поле для хранения выбранной иконки -->
+                        <input type="hidden" id="icon" name="icon" value="{{ site_form.icon.value }}">
                         <div class="select_item" id="selected-icon"></div>
                     </div>
+                
                     <div class="divider"></div>
                     <a>Выбрать цвет:</a>
                     <!-- Панель выбора цвета -->
@@ -246,8 +248,9 @@
                             
                             <!-- Добавьте больше цветов по желанию -->
                         </div>
-                        <input type="color" id="color" name="color" value="#007bff" class="color-picker-input">
-                        <span id="color-code" class="color-code">#007bff</span> <!-- Элемент для отображения кода цвета -->
+                         <!-- Поле для хранения выбранного цвета -->
+                        <input type="color" id="color" name="color" value="{{ site_form.color.value }}" class="color-picker-input">
+                        <span id="color-code" class="color-code">{{ site_form.color.value }}</span> <!-- Элемент для отображения кода цвета -->
                     </div>
                 </div>
                 
@@ -355,32 +358,80 @@
                             </div>
                             <div class="modal_icon_select" title="bi bi-lock-fill">
                                 <i class="bi bi-lock-fill"></i>
-                            </div>
-
-                                                                                
+                            </div>                                                                               
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
-                    </div>
-                    
+                    </div>    
                 </div>
             </div>
+        </div>
+        <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+            <div class="form-section">
+                <h3>SEO</h3>
+                <div class="form-container mt-3">
+                <div class="form-group">
+                    {{ seo_form.as_p }}
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="tab-pane fade" id="catalog" role="tabpanel" aria-labelledby="catalog-tab">    
+            <form id="choise-building-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="choise_building_form">
+                <div>
+                    <h3>Каталог сайта</h3>
+                    <p>Выбор недвижимости для показа на сайте</p>
+                    <div class="row">
+                        <!-- Проходимся по всем объектам недвижимости в форме -->
+                        {% for building in choise_building_form.fields.selected_buildings.queryset %}
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <!-- Изображение -->
+                                    {% if building.image %}
+                                        <img src="{{ building.image.url }}" class="card-img-top" alt="{{ building.title }}">
+                                    {% else %}
+                                        <img src="{% static 'main/img/default_image.jpg' %}" class="card-img-top" alt="Нет изображения">
+                                    {% endif %}
+                                    
+                                    <div class="card-body">
+                                        <!-- Чекбокс -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="selected_buildings" value="{{ building.pk }}" 
+                                                {% if building in choise_building_form.instance.selected_buildings.all %}checked{% endif %}>
+                                            <label class="form-check-label">{{ building.title }} <em>(Показывать на сайте)</em></label> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark mt-3">Подтвердить выбор</button>
+            </form>
+        
     </div>
+    </div>  
     <!-- Кнопка сохранения -->
     <button type="submit" class="btn btn-primary mt-3" id="externalSubmitButton">Сохранить</button>
 </div>
 
 
+
+
+
 {% if contact.image_contacts %}
-<form action="{% url 'delete_image_contacts' contact.pk %}" method="post" class="delete-form" id="FormDelete-{{ contact.pk }}">
+<form action="{% url 'delete_image_contacts' contact.pk %}" method="post" class="delete-form" id="FormDelete-contact-{{ contact.pk }}">
     {% csrf_token %}
 </form>
 {% endif %}
 
 {% if building.image %}
     <!-- Форма для удаления изображения -->
-    <form action="{% url 'delete_image_general' building.pk %}" method="post" class="delete-form" id="FormDelete-{{ building.pk }}">
+    <form action="{% url 'delete_image_general' building.pk %}" method="post" class="delete-form" id="FormDelete-building-{{ building.pk }}">
         {% csrf_token %}
     </form>
 
@@ -397,19 +448,40 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-function submitDeleteForm(contactId) {
-    var form = document.getElementById('FormDelete-' + contactId);
+document.getElementById('choise-building-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+    var formData = new FormData(this);
+    
+    fetch("{% url 'edit_s' pk=building.pk %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Недвижимость успешно сохранена!');
+        } else {
+            alert('Ошибка при сохранении недвижимости.');
+        }
+    })
+    .catch(error => console.error('Ошибка:', error));
+});
+
+
+
+
+
+function submitDeleteForm(itemId, itemType) {
+    var form = document.getElementById('FormDelete-' + itemType + '-' + itemId);
     if (form) {
         form.submit();
     }
 }
 
-function submitDeleteForm(firstscreenID) {
-    var form = document.getElementById('FormDelete-' + firstscreenID);
-    if (form) {
-        form.submit();
-    }
-}
 
 function setupImagePreview(inputId, previewContainerId) {
     document.getElementById(inputId).addEventListener('change', function(event) {
@@ -465,42 +537,56 @@ setupImagePreview('id_image', 'imagePreviewContainerImage');
 
 document.getElementById('externalSubmitButton').addEventListener('click', function() {
         document.getElementById('Form_site').submit();
-    });
+});
 
 
-
-// Код для сохранения activeTab при клике на вкладку
 document.querySelectorAll('.nav-link').forEach(function(link) {
     link.addEventListener('click', function() {
         var target = link.getAttribute('href');
-        localStorage.setItem('activeTab', target);
-        console.log('Tab clicked, activeTab saved to localStorage:', target);
+
+        // Проверка, начинается ли значение с #
+        if (target && target.startsWith('#')) {
+            localStorage.setItem('activeTab', target);  // Сохраняем только корректное значение
+            console.log('Tab clicked, activeTab saved to localStorage:', target);
+        } else {
+            console.warn('Ignored invalid tab selector:', target);  // Логируем некорректное значение
+        }
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Восстановление состояния вкладок
-    var activeTab = localStorage.getItem('activeTab');
-    if (activeTab) {
-        // Удаление классов активных вкладок
-        document.querySelectorAll('.nav-link').forEach(function(link) {
-            link.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-pane').forEach(function(pane) {
-            pane.classList.remove('show', 'active');
-        });
 
-        // Установка активного состояния
-        var activeLink = document.querySelector(`a[href="${activeTab}"]`);
-        var activePane = document.querySelector(activeTab);
-        
-        if (activeLink) {
-            activeLink.classList.add('active');
-        }
-        if (activePane) {
-            activePane.classList.add('show', 'active');
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    var activeTab = localStorage.getItem('activeTab');
+
+    // Если нет сохраненной вкладки или она некорректна, используем вкладку по умолчанию (например, #general)
+    if (!activeTab || !activeTab.startsWith('#')) {
+        activeTab = '#general';
+        localStorage.setItem('activeTab', activeTab);  // Обновляем значение в localStorage
     }
+
+    // Удаляем активные классы
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-pane').forEach(function(pane) {
+        pane.classList.remove('show', 'active');
+    });
+
+    // Устанавливаем активное состояние для сохраненной вкладки
+    var activeLink = document.querySelector(`a[href="${activeTab}"]`);
+    var activePane = document.querySelector(activeTab);
+
+    if (activeLink && activePane) {
+        activeLink.classList.add('active');
+        activePane.classList.add('show', 'active');
+    } else {
+        // Если вкладка не найдена, активируем вкладку по умолчанию
+        document.querySelector('a[href="#general"]').classList.add('active');
+        document.querySelector('#general').classList.add('show', 'active');
+    }
+});
+
+
 
     // Обработка кликов по вкладкам
     document.querySelectorAll('.nav-link').forEach(function(link) {
@@ -509,7 +595,12 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('activeTab', target);
         });
     });
-});
+
+
+
+
+
+
 
 $(document).ready(function() {
     // Функция для обработки клика на иконке
@@ -537,14 +628,6 @@ $(document).ready(function() {
     // Инициализация цвета и иконок и кода цвета при загрузке страницы
     updateIconColor();
 
-    // Устанавливаем иконку по умолчанию при загрузке страницы
-    selectDefaultIcon('bi bi-house');
-
-    // Функция для установки иконки по умолчанию
-    function selectDefaultIcon(iconClass) {
-        let selectedColor = $("#color").val();
-        setIcon(iconClass, selectedColor);
-    }
 
     // Обработчик кликов по иконкам в модальном окне
     document.querySelectorAll('.modal_icon_select').forEach(function(element) {
@@ -589,10 +672,42 @@ $(document).ready(function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация сохраненной иконки и цвета
+    var savedIcon = "{{ site_form.icon.value }}";  // Получение сохраненной иконки из формы
+    var savedColor = "{{ site_form.color.value }}";  // Получение сохраненного цвета
+
+    if (savedIcon) {
+        setIcon(savedIcon, savedColor);  // Устанавливаем иконку и цвет
+    }
+
+    // Обработчик изменения цвета и обновления иконки
+    document.getElementById('color').addEventListener('input', function() {
+        var selectedColor = this.value;
+        var iconClass = document.getElementById('icon').value;
+        setIcon(iconClass, selectedColor);
+    });
+
+    // Обработчик кликов по иконкам в модальном окне
+    document.querySelectorAll('.modal_icon_select').forEach(function(element) {
+        element.addEventListener('click', function() {
+            var iconClass = this.getAttribute('title');  // Получаем выбранную иконку
+            document.getElementById('icon').value = iconClass;  // Сохраняем её в поле
+            var selectedColor = document.getElementById('color').value;
+            setIcon(iconClass, selectedColor);  // Обновляем иконку
+        });
+    });
+
+    // Функция для установки иконки и цвета
+    function setIcon(iconClass, color) {
+        var iconHTML = '<i class="' + iconClass + '" style="color: ' + color + ';"></i>';
+        document.getElementById('selected-icon').innerHTML = iconHTML;
+        document.getElementById('icon').value = iconClass;
+    }
+});
 
 
 
 </script>
 
 {% endblock %}
-

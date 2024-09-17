@@ -1,5 +1,6 @@
 from django import forms
-from .models import FirstScreen, Contact, Sites, Choise, Image
+from .models import FirstScreen, Contact, Sites, Choise, Image, SeoSites
+from main.models import Building
 
 
 
@@ -23,16 +24,35 @@ class ChoiseForm(forms.ModelForm):
             }),
         }
         
+class ChoiseSelectForm(forms.ModelForm):
+    selected_buildings = forms.ModelMultipleChoiceField(
+        queryset=Building.objects.all(),
+        widget=forms.CheckboxSelectMultiple,  # Позволяет использовать набор чекбоксов
+        required=False,
+    )
+
+    class Meta:
+        model = Choise
+        fields = ['selected_buildings']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            # Фильтрация списка недвижимости по пользователю
+            self.fields['selected_buildings'].queryset = Building.objects.filter(type_choise__user=user)
+
+
 
 
 class FirstScreenForm(forms.ModelForm):
     class Meta:
         model = FirstScreen
-        fields = [ 'image', 'name', 'title', 'category', 'prefix', 'price', 'question1', 'variants1',
+        fields = [ 'image', 'name_company', 'title', 'category', 'prefix', 'price', 'question1', 'variants1',
                   'question2', 'variants2', 'question3', 'variants3', 'question4', 'variants4']
         
         widgets = {
-            'name': forms.TextInput(attrs={
+            'name_company': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': ''
             }),
@@ -130,10 +150,12 @@ class ContactForm(forms.ModelForm):
 class SitesForm(forms.ModelForm):
     class Meta:
         model = Sites
-        fields = [ 'name', 'number', 'decoding', 'text_under_number', 'link',  ]
+        fields = [ 'name_sites', 'number', 'decoding', 'text_under_number', 'link', 'icon', 'color'  ]
 
         widgets = {
-            'name': forms.TextInput(attrs={
+            'icon': forms.HiddenInput(),
+            'color': forms.HiddenInput(),
+            'name_sites': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': ''
             }),
@@ -171,3 +193,28 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['image_icons']
+
+
+class SeoSitesForm(forms.ModelForm):
+    class Meta:
+        model = SeoSites
+        fields = ['name_seo', 'url_link_seo', 'deskription_seo', 'key_word_seo']
+
+        widgets = {
+            'name_seo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите название'
+            }),
+            'url_link_seo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Укажите ссылку'
+            }),
+            'deskription_seo': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+            'key_word_seo': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': ''
+            }),
+        }
